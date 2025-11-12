@@ -5,18 +5,45 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OCR Scanner</title>
   <link rel="stylesheet" href="https://unpkg.com/milligram@1.4.1/dist/milligram.min.css">
-  <link rel="stylesheet" href="styles.css?v=1">
+  <link rel="stylesheet" href="style.css?v=1">
 </head>
 <body>
 
-  <h1>OCR Scanner</h1>
-  <p>Upload an image and extract the text using Tesseract.js</p>
+  <main>
+    <section id="scan" class="active">
 
-  <input type="file" id="imageInput" accept="image/*">
-  <br>
-  <img id="preview" style="display:none;" />
-  <pre id="result">No text found yet</pre>
-  <pre id="cleaned">No text to clean yet</pre>
+      <h1>OCR Scanner</h1>
+      <p>Upload an image and extract the text using Tesseract.js</p>
+
+      <input type="file" id="imageInput" accept="image/*">
+      <br>
+      <img id="preview" style="display:none;" />
+      <pre id="result">No text found yet</pre>
+      <pre id="cleaned">No text to clean yet</pre>
+
+    </section>
+
+    <!-- Sources Tab -->
+    <section id="sources">
+      <h2>Information Sources</h2>
+      <div class="pdf-item">
+        <a href="example1.pdf" target="_blank">EU Food Allergen List</a>
+        <p>Official list of major allergens under EU law.</p>
+      </div>
+      <div class="pdf-item">
+        <a href="example2.pdf" target="_blank">FDA Ingredient Guide</a>
+        <p>Guidelines from the FDA about ingredient labeling.</p>
+      </div>
+    </section>
+
+
+  </main>
+
+  <header>
+    <button id="tab-allergies">⚕️Allergies</button>
+    <button id="tab-scan" class="active">📷Scan</button>
+    <button id="tab-sources">📚Sources</button>
+  </header>
 
   <!-- Tesseract.js -->
   <script src="https://unpkg.com/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
