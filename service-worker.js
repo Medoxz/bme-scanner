@@ -1,6 +1,6 @@
 self.addEventListener('install', (e) => {
   e.waitUntil(
-    caches.open('pwa-barcode-scanner-v1').then((cache) => {
+    caches.open('pwa-scanner-v1').then((cache) => {
       return cache.addAll(['./', './index.html', './script.js', './manifest.json']);
     })
   );
