@@ -1,32 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PWA Barcode Scanner</title>
-  <link rel="manifest" href="manifest.json" />
-  <link rel="stylesheet" href="styles.css?v=2">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OCR Scanner</title>
+  <link rel="stylesheet" href="https://unpkg.com/milligram@1.4.1/dist/milligram.min.css">
+  <style>
+    body {
+      padding: 2em;
+      text-align: center;
+    }
+    #preview {
+      max-width: 300px;
+      margin-top: 1em;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    #result, #cleaned {
+      margin-top: 1em;
+      background: #f5f5f5;
+      padding: 1em;
+      border-radius: 8px;
+      white-space: pre-wrap;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-  <h1>BME Barcode Scanner</h1>
 
-  <div>
-    <button id="startBtn">Start Scanner</button>
-    <button id="resetBtn">Reset Camera</button>
-  </div>
+  <h1>OCR Scanner</h1>
+  <p>Upload an image and extract the text using Tesseract.js</p>
 
-  <div id="result">No barcode detected</div>
+  <input type="file" id="imageInput" accept="image/*">
+  <br>
+  <img id="preview" style="display:none;" />
+  <pre id="result"></pre>
+  <pre id="cleaned"></pre>
 
-  <div>
-    <video id="video" autoplay playsinline></video>
-  </div>
+  <!-- Tesseract.js -->
+  <script src="https://unpkg.com/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
+  <script src="script.js"></script>
 
-  
-  <div>
-    <select id="cameraSelect"></select>
-  </div>
-
-  <script src="https://unpkg.com/@zxing/library@latest/umd/index.min.js"></script>
-  <script type="module" src="script.js"></script>
 </body>
 </html>

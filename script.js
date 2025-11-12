@@ -1,74 +1,46 @@
-// Load ZXing library from CDN dynamically (like in the example)
-const zxingScript = document.createElement('script');
-document.head.appendChild(zxingScript);
+const imageInput = document.getElementById('imageInput');
+const preview = document.getElementById('preview');
+const resultEl = document.getElementById('result');
+const cleanedResult = document.getElementById('cleaned');
 
-window.addEventListener('load', function () {
-  let selectedDeviceId;
-  const codeReader = new ZXing.BrowserMultiFormatReader()
-  console.log('ZXing code reader initialized')
+imageInput.addEventListener('change', async (event) => {
+  const file = event.target.files[0];
+  if (!file) return;
 
-  const video = document.getElementById('video')
-  const resultEl = document.getElementById('result')
-  const startBtn = document.getElementById('startBtn')
-  const cameraSelect = document.getElementById('cameraSelect')
+  // Show a preview
+  const imgURL = URL.createObjectURL(file);
+  preview.src = imgURL;
+  preview.style.display = 'block';
 
-  codeReader.listVideoInputDevices()
-    .then((videoInputDevices) => {
-      selectedDeviceId = videoInputDevices[0].deviceId
+  resultEl.textContent = 'Reading text... ⏳';
 
-      startBtn.addEventListener('click', () => {
-        // resultEl.textContent = 'Scanning...'
-        codeReader.decodeFromVideoDevice(selectedDeviceId, 'video', (result, err) => {
-          if (result) {
-            console.log(result);
-            resultEl.textContent = result.text;
-          }
-          if (err && !(err instanceof ZXing.NotFoundException)) {
-            console.error(err);
-            resultEl.textContent = `Error: ${err}`
-          }
-        });
-        console.log(`Started continuous decode from camera with id ${selectedDeviceId}`)
-      });
-
-      document.getElementById('resetBtn').addEventListener('click', () => {
-        codeReader.reset()
-        console.log('Reset.')
-      })
-
-
-      // Populate the camera selection dropdown
-      // cameraSelect.innerHTML = '';
-      // if (videoInputDevices.length === 0) {
-      //   resultEl.textContent = 'No cameras found';
-      //   return;
-      // }
-
-      if (videoInputDevices.length >= 1) {
-        videoInputDevices.forEach((device, index) => {
-            const option = document.createElement('option');
-            option.text = device.label || `Camera ${index + 1}`;
-            option.value = device.deviceId;
-            cameraSelect.appendChild(option);
-        });
-
-        cameraSelect.onchange = () => {
-          selectedDeviceId = cameraSelect.value;
-        };
+  try {
+    // Run OCR using Tesseract.js
+    const { data: { text } } = await Tesseract.recognize(
+      file,
+      'eng', // language
+      {
+        logger: m => console.log(m) // progress updates
       }
+    );
 
-      
+    resultEl.textContent = text.trim() || '(No text detected)';
 
-
-
-      
-
-    })
-    .catch((err) => {
-      console.error(err);
-      resultEl.textContent = `Camera error: ${err.message}`;
-    })
-})
+    cleanedResult.textContent = text
+      .replace(/-\n/g, '')           // fix hyphenated words
+      .replace(/\n+/g, ' ')          // remove extra newlines
+      .replace(/[^a-zA-Z0-9(),.%\s-]/g, '') // remove stray characters
+      .replace(/\s+/g, ' ')          // collapse spaces
+      .trim()
+      .split(/[\s,]+/)          // split by space or comma
+      .filter(word => word.length > 1)
+      .join(', ')               // re-join with commas
+      .replace(/,/g, '\n')          // turn commas into new lines
+  } catch (err) {
+    console.error(err);
+    resultEl.textContent = 'Error reading text.';
+  }
+});
 
 // Register service worker for PWA installability
 if ('serviceWorker' in navigator) {
