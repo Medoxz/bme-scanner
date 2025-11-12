@@ -48,7 +48,7 @@ header {
 header button {
   font-weight: 300;
   background: none;
-  border: none;
+  border:#f5f5f5;
   color: white;
   font-size: 1em;
   cursor: pointer;
