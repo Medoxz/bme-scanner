@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>OCR Scanner</title>
   <!-- <link rel="stylesheet" href="https://unpkg.com/milligram@1.4.1/dist/milligram.min.css"> -->
-  <link rel="stylesheet" href="style.css?v=1">
+  <link rel="stylesheet" href="src/style.css?v=1">
 </head>
 <body>
 
@@ -13,7 +13,7 @@
     <section id="scan" class="active">
 
       <h1>OCR Scanner</h1>
-      <p>Upload an image and extract the text using Tesseract.js</p>
+      <p>Upload een foto van een ingredïentenlijst</p>
 
       <input type="file" id="imageInput" accept="image/*">
       <br>
@@ -36,6 +36,11 @@
       </div>
     </section>
 
+    <!-- Allergies Tab -->
+    <section id="allergies">
+      <h2>Selected allergies</h2>
+    </section>
+
 
   </main>
 
@@ -47,7 +52,10 @@
 
   <!-- Tesseract.js -->
   <script src="https://unpkg.com/tesseract.js@5.0.4/dist/tesseract.min.js"></script>
-  <script src="script.js"></script>
+  <script src="src/tabs.js"></script>
+  <script src="src/allergies.js"></script>
+  <script src="src/scan.js"></script>
+  <script src="src/sources.js"></script>
 
 </body>
 </html>
