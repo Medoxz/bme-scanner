@@ -1,5 +1,11 @@
 [
   {
+    "chemical_name": "Test",
+    "file": "Allergie voor Teststof",
+    "alternative_names": [
+      "cineole"
+    ]
+  },{
     "chemical_name": "Abitol",
     "file": "Allergie voor Abitol",
     "alternative_names": [

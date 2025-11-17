@@ -1,7 +1,7 @@
 self.addEventListener('install', (e) => {
   e.waitUntil(
     caches.open('pwa-scanner-v1').then((cache) => {
-      return cache.addAll(['./', './index.html', './script.js', './manifest.json']);
+      return cache.addAll(['./', './index.html', './src/tabs.js', './manifest.json']);
     })
   );
 });

@@ -18,8 +18,31 @@
       <input type="file" id="imageInput" accept="image/*">
       <br>
       <img id="preview" style="display:none;" />
-      <pre id="result">No text found yet</pre>
-      <pre id="cleaned">No text to clean yet</pre>
+      <br>
+
+      <div class="collapsible">
+        <button class="collapsible-header">
+          <span class="chevron open">▶</span>
+          📄 Raw OCR Result
+        </button>
+        <pre id="result" class="collapsible-content open">No text found yet</pre>
+      </div>
+
+      <div class="collapsible">
+        <button class="collapsible-header">
+          <span class="chevron open">▶</span>
+          ✨ Cleaned Result
+        </button>
+        <pre id="cleaned" class="collapsible-content open">No text yet</pre>
+      </div>
+
+      <div class="collapsible">
+        <button class="collapsible-header">
+          <span class="chevron open">▶</span>
+          ⚠️ Allergy Matches
+        </button>
+        <pre id="matches" class="collapsible-content open">No matches yet</pre>
+      </div>
 
     </section>
 
@@ -27,12 +50,16 @@
     <section id="sources">
       <h2>Information Sources</h2>
       <div class="pdf-item">
-        <a href="example1.pdf" target="_blank">EU Food Allergen List</a>
-        <p>Official list of major allergens under EU law.</p>
+        <a href="https://www.asz.nl/folders/allergie-cosmeticareeks_836/" target="_blank">ASZ Allergie Cosmeticareeks</a>
+        <p>Momenteel geiplementeerde reeks aan allergïen voor het controleren op alternatieve namen.</p>
       </div>
       <div class="pdf-item">
-        <a href="example2.pdf" target="_blank">FDA Ingredient Guide</a>
-        <p>Guidelines from the FDA about ingredient labeling.</p>
+        <a href="https://www.asz.nl/folders/" target="_blank">ASZ Patiëntenfolders</a>
+        <p>Patiëntenfolders van ASZ, waaronder verschillende allergie reeksen.</p>
+      </div>
+      <div class="pdf-item">
+        <a href="https://nvdv.nl/patienten/dermatologie/zoek-een-huidaandoening" target="_blank">NVDV Patiëntenfolders</a>
+        <p>Patiëntenfolders van NVDV, waaronder verschillende allergie folders.</p>
       </div>
     </section>
 

@@ -23,13 +23,53 @@ main {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
-#result, #cleaned {
+#result, #cleaned, #matches {
   margin-top: 1em;
   background: #f5f5f5;
   padding: 1em;
   border-radius: 8px;
   white-space: pre-wrap;
   text-align: left;
+}
+.collapsible-header {
+  width: 100%;
+  background: #0077cc;
+  color: white;
+  padding: 10px;
+  border: none;
+  border-radius: 6px;
+  font-size: 1em;
+  text-align: left;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 1px;
+}
+
+.chevron {
+  display: inline-block;
+  transition: transform 0.2s ease;
+  font-size: 0.8em;
+}
+
+/* Rotate down when open */
+.chevron.open {
+  transform: rotate(90deg);
+}
+
+.collapsible-content {
+  max-height: 10px;
+  overflow: hidden;
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 0 10px;
+  transition: max-height 0.3s ease-out, padding 0.3s ease-out;
+  margin-top: 5px;
+}
+
+.collapsible-content.open {
+  padding: 10px;
+  max-height: 800px;
 }
 
 
