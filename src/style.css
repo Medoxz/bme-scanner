@@ -23,7 +23,7 @@ main {
   border: 1px solid #ccc;
   border-radius: 8px;
 }
-#result, #cleaned, #matches {
+#result, #cleaned, #matches, #alts {
   margin-top: 1em;
   background: #f5f5f5;
   padding: 1em;

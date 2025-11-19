@@ -72,14 +72,17 @@ imageInput.addEventListener('change', async (event) => {
 
 function matchAllergens() {
   const matchesBox = document.getElementById('matches');
+  const altsBox = document.getElementById('alts');
 
-  if (!cleanedTextGlobal || cleanedTextGlobal.length < 2) {
-    matchesBox.textContent = "No cleaned text yet.";
-    return;
-  }
+  // if (!cleanedTextGlobal || cleanedTextGlobal.length < 2) {
+  //   matchesBox.textContent = "No cleaned text yet.";
+  //   altsBox.textContent = "No allergen names loaded yet.";
+  //   return;
+  // }
 
   if (!allergenList || allergenList.length === 0) {
     matchesBox.textContent = "No allergen data loaded.";
+    altsBox.textContent = "No allergen data loaded.";
     return;
   }
 
@@ -89,15 +92,18 @@ function matchAllergens() {
 
   if (selected.length === 0) {
     matchesBox.textContent = "No allergies selected.";
+    altsBox.textContent = "No allergies selected.";
     return;
   }
 
   let matches = [];
+  let allAlternativeNames = [];
 
   allergenList.forEach(allergen => {
     if (!selected.includes(allergen.chemical_name)) return;
 
     const alts = allergen.alternative_names.map(a => a.toLowerCase());
+    allAlternativeNames.push(...allergen.alternative_names);
 
     alts.forEach(name => {
       if (cleanedTextGlobal.includes(name)) {
@@ -106,8 +112,15 @@ function matchAllergens() {
     });
   });
 
+  // Fill found matches
   matchesBox.textContent =
-    matches.length > 0
+    (matches.length > 0 && cleanedTextGlobal.length > 0)
       ? "⚠️ Found allergens:\n" + matches.join("\n")
       : "✔️ No allergens found.";
+
+  // Fill alternative search names
+  altsBox.textContent =
+    allAlternativeNames.length > 0
+      ? allAlternativeNames.join("\n")
+      : "No alternative names found for selected allergens.";
 }
