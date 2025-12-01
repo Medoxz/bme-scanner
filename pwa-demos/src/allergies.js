@@ -4,7 +4,7 @@ let allergenList = []; // GLOBAL array
 
 async function loadAllergens() {
   try {
-    const response = await fetch('data/alternative_names_asz.json')  // adjust path if needed
+    const response = await fetch('../data/alternative_names_asz.json')  // adjust path if needed
     const allergens = await response.json()
     allergenList = allergens
 
