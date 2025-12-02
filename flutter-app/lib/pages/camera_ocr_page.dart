@@ -1,16 +1,15 @@
 /// Camera OCR Page - Continuous Text Recognition with Word Matching
-/// 
+///
 /// This page provides a real-time camera feed that continuously scans for text using ML Kit.
 /// Users can optionally provide a list of words to search for, and the app will:
 /// - Display all recognized text in a scrollable view
 /// - Highlight matched words with green bounding boxes on the camera preview
 /// - Show matched words in chips that turn green when found
-/// 
+///
 /// The camera automatically starts scanning when initialized, processing frames
 /// at approximately 1 frame per second to balance performance and responsiveness.
 
 import 'dart:async';
-import 'dart:typed_data';
 import 'package:camera/camera.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -30,16 +29,16 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
   // ============================================================================
   // CAMERA & OCR COMPONENTS
   // ============================================================================
-  
+
   /// Controller for managing the camera feed
   CameraController? _cameraController;
-  
+
   /// Whether the camera has been successfully initialized
   bool _isInitialized = false;
-  
+
   /// Whether an OCR operation is currently in progress (prevents overlapping processing)
   bool _isProcessing = false;
-  
+
   /// ML Kit text recognizer instance for processing images
   final TextRecognizer _textRecognizer = TextRecognizer(
     script: TextRecognitionScript.latin,
@@ -48,40 +47,37 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
   // ============================================================================
   // WORD MATCHING STATE
   // ============================================================================
-  
+
   /// Controller for the text field where users enter words to search for
   final TextEditingController _wordListController = TextEditingController();
-  
+
   /// List of words the user wants to find (parsed from comma-separated input)
   List<String> _userWords = [];
-  
+
   /// Set of words that have been matched in the current frame
   Set<String> _matchedWords = {};
-  
+
   /// Text blocks that contain matched words (used for drawing bounding boxes)
   List<TextBlock> _matchedTextBlocks = [];
-  
+
   /// Size of the camera image (used for coordinate mapping to preview)
   Size? _imageSize;
-  
+
   /// Full text recognized by OCR (displayed in the scrollable view)
   String _recognizedText = "";
 
   // ============================================================================
   // SCANNING STATE
   // ============================================================================
-  
+
   /// Whether continuous scanning is currently active
   bool _isScanning = false;
-  
+
   /// Timestamp of the last frame processing (for throttling)
   DateTime? _lastProcessTime;
-  
+
   /// Minimum time between processing frames (1 second to avoid overloading)
-  static const Duration _processingInterval = Duration(milliseconds: 100);
-  
-  /// Timer for processing throttling (currently unused but kept for potential future use)
-  Timer? _processingTimer;
+  static const Duration _processingInterval = Duration(milliseconds: 500);
 
   // ============================================================================
   // LIFECYCLE METHODS
@@ -127,9 +123,9 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
       final cameras = await availableCameras();
       if (cameras.isEmpty) {
         if (mounted) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('No cameras available')),
-          );
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('No cameras available')));
         }
         return;
       }
@@ -148,7 +144,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
         setState(() {
           _isInitialized = true;
         });
-        
+
         // Automatically start continuous scanning once camera is initialized
         // This means scanning begins immediately without user interaction
         _startScanning();
@@ -178,7 +174,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
           .map((word) => word.trim().toLowerCase())
           .where((word) => word.isNotEmpty)
           .toList();
-      
+
       // Clear previous matches and recognized text when word list changes
       _matchedWords.clear();
       _matchedTextBlocks.clear();
@@ -203,12 +199,10 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 
       // Start receiving camera frames continuously
       // The callback function will be called for each frame
-      await _cameraController!.startImageStream(
-        (CameraImage image) {
-          // Process each frame as it arrives
-          _processCameraFrame(image);
-        },
-      );
+      await _cameraController!.startImageStream((CameraImage image) {
+        // Process each frame as it arrives
+        _processCameraFrame(image);
+      });
     } catch (e) {
       // If stream fails to start, show error and stop scanning
       if (mounted) {
@@ -234,7 +228,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
   // ============================================================================
 
   /// Processes a single camera frame through OCR
-  /// 
+  ///
   /// Flow:
   /// 1. Throttles processing to avoid overwhelming the system
   /// 2. Converts CameraImage to InputImage format
@@ -270,26 +264,26 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 
       // Step 3: Store image dimensions for coordinate mapping (needed for bounding boxes)
       _imageSize = Size(image.width.toDouble(), image.height.toDouble());
-      
+
       // Step 4: Extract the plain text string from the recognition result
       final recognizedTextString = recognizedText.text;
 
       // Step 5: Check for word matches (only if user provided words to search for)
-      final newMatches = <String>{};      // Words that matched in this frame
+      final newMatches = <String>{}; // Words that matched in this frame
       final matchedBlocks = <TextBlock>[]; // Text blocks containing matches
 
       if (_userWords.isNotEmpty) {
         // Split recognized text into individual words for matching
-        final recognizedWords = recognizedText.text
-            .toLowerCase()
-            .split(RegExp(r'[\s\n\r\t,;:!?.]+')) // Split on whitespace and punctuation
-            .where((word) => word.isNotEmpty)
-            .toSet();
+        // final recognizedWords = recognizedText.text
+        //     .toLowerCase()
+        //     .split(RegExp(r'[\s\n\r\t,;:!?.]+')) // Split on whitespace and punctuation
+        //     .where((word) => word.isNotEmpty)
+        //     .toSet();
 
         // Check each text block (group of words detected together) for matches
         for (final block in recognizedText.blocks) {
           final blockText = block.text.toLowerCase();
-          
+
           // Compare against each word in the user's search list
           for (final userWord in _userWords) {
             // Check if user word appears anywhere in this text block
@@ -310,7 +304,8 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                   break;
                 }
               }
-              if (matchedBlocks.contains(block)) break; // Already matched this block
+              if (matchedBlocks.contains(block))
+                break; // Already matched this block
             }
           }
         }
@@ -319,10 +314,11 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
       // Step 6: Update UI with results
       if (mounted) {
         setState(() {
-          _matchedWords = newMatches;              // Update matched words
-          _matchedTextBlocks = matchedBlocks;      // Update blocks for bounding boxes
-          _recognizedText = recognizedTextString;  // Update displayed text
-          _isProcessing = false;                   // Mark processing as complete
+          _matchedWords = newMatches; // Update matched words
+          _matchedTextBlocks =
+              matchedBlocks; // Update blocks for bounding boxes
+          _recognizedText = recognizedTextString; // Update displayed text
+          _isProcessing = false; // Mark processing as complete
         });
       }
     } catch (e) {
@@ -344,14 +340,14 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
   // ============================================================================
 
   /// Converts a CameraImage (from camera stream) to InputImage (for ML Kit)
-  /// 
+  ///
   /// Camera provides images in various formats (YUV420, NV21, BGRA8888)
   /// ML Kit needs a specific InputImage format with proper metadata
   InputImage _inputImageFromCameraImage(CameraImage image) {
     // Determine the image format based on camera's output format
     final format = image.format.group;
     InputImageFormat inputImageFormat;
-    
+
     // Map camera format to ML Kit format
     if (format == ImageFormatGroup.yuv420) {
       inputImageFormat = InputImageFormat.yuv420;
@@ -377,14 +373,12 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
       size: Size(image.width.toDouble(), image.height.toDouble()),
       rotation: InputImageRotation.rotation0deg, // Assume no rotation
       format: inputImageFormat,
-      bytesPerRow: image.planes[0].bytesPerRow, // Bytes per row in the first plane
+      bytesPerRow:
+          image.planes[0].bytesPerRow, // Bytes per row in the first plane
     );
 
     // Create InputImage from the byte array and metadata
-    return InputImage.fromBytes(
-      bytes: bytes,
-      metadata: inputImageData,
-    );
+    return InputImage.fromBytes(bytes: bytes, metadata: inputImageData);
   }
 
   // ============================================================================
@@ -452,8 +446,9 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                       final isMatched = _matchedWords.contains(word);
                       return Chip(
                         label: Text(word),
-                        backgroundColor:
-                            isMatched ? Colors.green[300] : Colors.grey[300],
+                        backgroundColor: isMatched
+                            ? Colors.green[300]
+                            : Colors.grey[300],
                         deleteIcon: const Icon(Icons.close, size: 18),
                         onDeleted: () {
                           // Remove word from list when X is clicked
@@ -481,10 +476,8 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                 if (_isInitialized && _cameraController != null)
                   CameraPreview(_cameraController!)
                 else
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                
+                  const Center(child: CircularProgressIndicator()),
+
                 // Bounding boxes overlay: green rectangles around matched text
                 if (_matchedTextBlocks.isNotEmpty && _imageSize != null)
                   LayoutBuilder(
@@ -502,7 +495,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                       );
                     },
                   ),
-                
+
                 // Matches overlay: green banner showing which words were found
                 if (_matchedWords.isNotEmpty)
                   Positioned(
@@ -545,16 +538,14 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                       ),
                     ),
                   ),
-                
+
                 // Processing indicator: shows spinner while OCR is running
                 if (_isProcessing)
-                  const Center(
-                    child: CircularProgressIndicator(),
-                  ),
+                  const Center(child: CircularProgressIndicator()),
               ],
             ),
           ),
-          
+
           // ====================================================================
           // SCANNED TEXT DISPLAY SECTION
           // ====================================================================
@@ -609,14 +600,14 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 // ============================================================================
 
 /// Custom painter that draws green bounding boxes around matched text on the camera preview
-/// 
+///
 /// Handles coordinate transformation from image coordinates (where OCR detected text)
 /// to preview coordinates (where the camera preview is displayed)
 /// Accounts for different aspect ratios between image and preview
 class TextBlockPainter extends CustomPainter {
   final List<TextBlock> textBlocks; // Text blocks to draw boxes around
-  final Size imageSize;              // Size of the original camera image
-  final Size previewSize;            // Size of the preview widget
+  final Size imageSize; // Size of the original camera image
+  final Size previewSize; // Size of the preview widget
 
   TextBlockPainter({
     required this.textBlocks,
@@ -636,38 +627,40 @@ class TextBlockPainter extends CustomPainter {
     // This handles cases where the image and preview have different aspect ratios
     final imageAspectRatio = imageSize.width / imageSize.height;
     final previewAspectRatio = size.width / size.height;
-    
+
     double scaleX, scaleY;
     double offsetX = 0, offsetY = 0;
-    
+
     // Determine scaling strategy based on which dimension is the limiting factor
     if (previewAspectRatio > imageAspectRatio) {
       // Preview is wider than image - fit to height (letterboxing on sides)
       scaleY = size.height / imageSize.height;
       scaleX = scaleY; // Maintain aspect ratio
-      offsetX = (size.width - imageSize.width * scaleX) / 2; // Center horizontally
+      offsetX =
+          (size.width - imageSize.width * scaleX) / 2; // Center horizontally
     } else {
       // Preview is taller than image - fit to width (letterboxing on top/bottom)
       scaleX = size.width / imageSize.width;
       scaleY = scaleX; // Maintain aspect ratio
-      offsetY = (size.height - imageSize.height * scaleY) / 2; // Center vertically
+      offsetY =
+          (size.height - imageSize.height * scaleY) / 2; // Center vertically
     }
 
     // Draw bounding box for each matched text block
     for (final block in textBlocks) {
       final rect = block.boundingBox;
-      
+
       // Transform bounding box coordinates from image space to preview space
       final scaledRect = Rect.fromLTWH(
-        rect.left * scaleX + offsetX,   // Scale and offset X coordinate
-        rect.top * scaleY + offsetY,    // Scale and offset Y coordinate
-        rect.width * scaleX,            // Scale width
-        rect.height * scaleY,           // Scale height
+        rect.left * scaleX + offsetX, // Scale and offset X coordinate
+        rect.top * scaleY + offsetY, // Scale and offset Y coordinate
+        rect.width * scaleX, // Scale width
+        rect.height * scaleY, // Scale height
       );
 
       // Draw green outline
       canvas.drawRect(scaledRect, paint);
-      
+
       // Draw semi-transparent green fill for better visibility
       final fillPaint = Paint()
         ..color = Colors.green.withOpacity(0.2)
