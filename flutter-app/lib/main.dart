@@ -1,7 +1,7 @@
 import 'package:bme_scanner/pages/allergies_select.dart';
+import 'package:bme_scanner/pages/camera_ocr_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
-import 'pages/camera_ocr_page.dart';
 
 void main() {
   runApp(const IngredientScannerApp());
@@ -59,8 +59,8 @@ class _MainNavigationState extends State<MainNavigation> {
             label: "Home",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.camera_alt),
-            label: "Camera Scan",
+            icon: Icon(Icons.camera_alt_rounded),
+            label: "Scan",
           ),
         ],
       ),
