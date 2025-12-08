@@ -23,7 +23,16 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 
   Future<void> _performScan() async {
     PermissionStatus status = await Permission.camera.request();
-    if (!status.isGranted) return;
+    print(status);
+
+    if (!status.isGranted) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(content: Text('Camera permission denied')),
+        );
+      }
+      return;
+    }
 
     final XFile? picked = await _picker.pickImage(source: ImageSource.camera);
 
