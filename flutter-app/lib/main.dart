@@ -1,6 +1,7 @@
+import 'package:bme_scanner/pages/allergies_select.dart';
+import 'package:bme_scanner/pages/camera_ocr_page.dart';
 import 'package:flutter/material.dart';
 import 'pages/home_page.dart';
-import 'pages/camera_ocr_page.dart';
 
 void main() {
   runApp(const IngredientScannerApp());
@@ -27,9 +28,13 @@ class MainNavigation extends StatefulWidget {
 }
 
 class _MainNavigationState extends State<MainNavigation> {
-  int _selectedIndex = 0;
+  int _selectedIndex = 1;
 
-  final List<Widget> _screens = const [HomePage(), CameraOCRPage()];
+  final List<Widget> _screens = const [
+    AllergiesSelectPage(),
+    HomePage(),
+    CameraOCRPage(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -45,10 +50,17 @@ class _MainNavigationState extends State<MainNavigation> {
           });
         },
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.list), label: "Results"),
           BottomNavigationBarItem(
-            icon: Icon(Icons.camera_alt),
-            label: "Camera OCR",
+            icon: Icon(Icons.list),
+            label: "Selected Allergies",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.house_outlined),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.camera_alt_rounded),
+            label: "Scan",
           ),
         ],
       ),
