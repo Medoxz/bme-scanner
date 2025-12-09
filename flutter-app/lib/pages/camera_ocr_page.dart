@@ -22,8 +22,12 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
   );
 
   Future<void> _performScan() async {
-    PermissionStatus status = await Permission.camera.request();
-    print(status);
+    // PermissionStatus status = await Permission.camera.request();
+    // print(status);
+
+    final XFile? picked = await _picker.pickImage(source: ImageSource.camera);
+
+    PermissionStatus status = await Permission.camera.status;
 
     if (!status.isGranted) {
       if (mounted) {
@@ -33,8 +37,6 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
       }
       return;
     }
-
-    final XFile? picked = await _picker.pickImage(source: ImageSource.camera);
 
     if (picked == null) return;
 
