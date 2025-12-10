@@ -1,6 +1,7 @@
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'Components/allergy_listing.dart';
-// import 'allergy_item_widget.dart';
 
 class AllergiesSelectPage extends StatefulWidget {
   const AllergiesSelectPage({super.key});
@@ -16,9 +17,33 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
   final FocusNode _searchFocusNode = FocusNode();
 
   // Sample allergy list; replace with your real data source
-  final List<String> _allergies = ['Allergy 1', 'Allergy 2'];
+  List<Map<String, dynamic>> _allergies = [
+    {
+      "chemical_name": "Example Allergen 1",
+      "file": "Allergie voor Example",
+      "alternative_names": ["Alternative 1", "Alternative 2"],
+    },
+  ];
 
   String _searchQuery = '';
+
+  @override
+  void initState() {
+    super.initState();
+    _loadAllergies();
+  }
+
+  Future<void> _loadAllergies() async {
+    final jsonString = await rootBundle.loadString(
+      'assets/alternative_names_asz.json',
+    );
+
+    final List<dynamic> jsonData = json.decode(jsonString);
+
+    setState(() {
+      _allergies = List<Map<String, dynamic>>.from(jsonData);
+    });
+  }
 
   @override
   void dispose() {
@@ -30,9 +55,10 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
   @override
   Widget build(BuildContext context) {
     // Filter allergies based on search query
-    final filteredAllergies = _allergies
-        .where((a) => a.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
+    final filtered = _allergies.where((item) {
+      final name = item["chemical_name"] ?? "";
+      return name.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
 
     return GestureDetector(
       onTap: () {
@@ -81,15 +107,15 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                 // ---------- Allergy List ----------
                 Expanded(
                   child: ListView.builder(
-                    itemCount: filteredAllergies.length,
+                    itemCount: filtered.length,
                     itemBuilder: (context, index) {
-                      final allergyName = filteredAllergies[index];
+                      final item = filtered[index];
+
                       return AllergyListingWidget(
-                        allergyName: allergyName,
-                        alternativeNames: [
-                          "sample alternative 1",
-                          "sample alternative 2",
-                        ],
+                        allergyName: item["chemical_name"],
+                        alternativeNames: List<String>.from(
+                          item["alternative_names"] ?? [],
+                        ),
                       );
                     },
                   ),

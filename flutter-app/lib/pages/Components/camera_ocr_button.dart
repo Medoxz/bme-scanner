@@ -5,9 +5,14 @@ import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart
 import 'package:permission_handler/permission_handler.dart';
 
 class CameraOCRButton extends StatefulWidget {
-  final Function(String text)? onTextRecognized;
+  final Function(String text, File image)? onTextRecognized;
+  final Function()? onPermissionDenied;
 
-  const CameraOCRButton({super.key, this.onTextRecognized});
+  const CameraOCRButton({
+    super.key,
+    this.onTextRecognized,
+    this.onPermissionDenied,
+  });
 
   @override
   State<CameraOCRButton> createState() => _CameraOCRButtonState();
@@ -22,19 +27,18 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
   bool _isProcessing = false;
 
   Future<void> _performScan() async {
-    final XFile? picked = await _picker.pickImage(source: ImageSource.camera);
+    XFile? picked;
+    try {
+      picked = await _picker.pickImage(source: ImageSource.camera);
+    } catch (e) {
+      widget.onPermissionDenied?.call();
+      return;
+    }
 
     PermissionStatus status = await Permission.camera.status;
 
     if (!status.isGranted) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text(
-            'Camera permission denied. Tap to enable in settings.',
-          ),
-          action: SnackBarAction(label: 'Settings', onPressed: openAppSettings),
-        ),
-      );
+      widget.onPermissionDenied?.call();
       return;
     }
 
@@ -48,9 +52,9 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
     try {
       final text = await textRecognizer.processImage(inputImage);
 
-      widget.onTextRecognized?.call(text.text);
+      widget.onTextRecognized?.call(text.text, image);
     } catch (e) {
-      widget.onTextRecognized?.call("Error: $e");
+      widget.onTextRecognized?.call("Error: $e", image);
     }
 
     setState(() => _isProcessing = false);
@@ -64,14 +68,23 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        ElevatedButton(onPressed: _performScan, child: Icon(Icons.camera_alt)),
-        if (_isProcessing)
-          const Positioned.fill(
-            child: Center(child: CircularProgressIndicator()),
+    return SizedBox(
+      width: double.infinity,
+      height: 48,
+      child: Stack(
+        children: [
+          Positioned.fill(
+            child: ElevatedButton(
+              onPressed: _performScan,
+              child: const Icon(Icons.camera_alt),
+            ),
           ),
-      ],
+          if (_isProcessing)
+            const Positioned.fill(
+              child: Center(child: CircularProgressIndicator()),
+            ),
+        ],
+      ),
     );
   }
 }
