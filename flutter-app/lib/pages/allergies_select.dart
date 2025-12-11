@@ -35,7 +35,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
 
   Future<void> _loadAllergies() async {
     final jsonString = await rootBundle.loadString(
-      'assets/data_synonyms_comprehensive.json',
+      'assets/Data_app_export.json',
     );
 
     final List<dynamic> jsonData = json.decode(jsonString);
