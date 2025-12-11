@@ -1,4 +1,3 @@
-import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 
 class AllergyListingWidget extends StatefulWidget {
@@ -16,19 +15,85 @@ class AllergyListingWidget extends StatefulWidget {
 }
 
 class _AllergyListingWidgetState extends State<AllergyListingWidget> {
-  late ExpandableController _controller;
   bool _isSelected = false;
 
-  @override
-  void initState() {
-    super.initState();
-    _controller = ExpandableController(initialExpanded: false);
-  }
+  void _showAlternatives() {
+    if (widget.alternativeNames == null || widget.alternativeNames!.isEmpty)
+      return;
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      isDismissible: true, // allows closing by tapping outside
+      backgroundColor: Colors.transparent,
+      builder: (context) {
+        final maxHeight = MediaQuery.of(context).size.height * 0.6;
+        final width = MediaQuery.of(context).size.width * 0.9;
+
+        return Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            width: width,
+            constraints: BoxConstraints(maxHeight: maxHeight),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: const BorderRadius.vertical(
+                top: Radius.circular(16),
+              ),
+              boxShadow: const [
+                BoxShadow(
+                  blurRadius: 4,
+                  color: Color(0x1A000000),
+                  offset: Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Padding(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  // Header row with title and close button
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        '${widget.allergyName} - Synonyms',
+                        style: Theme.of(context).textTheme.titleMedium
+                            ?.copyWith(fontWeight: FontWeight.w600),
+                      ),
+                      IconButton(
+                        icon: const Icon(Icons.close),
+                        onPressed: () => Navigator.of(context).pop(),
+                      ),
+                    ],
+                  ),
+                  const SizedBox(height: 12),
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          for (final name in widget.alternativeNames!)
+                            Padding(
+                              padding: const EdgeInsets.symmetric(vertical: 4),
+                              child: Text(
+                                name,
+                                style: Theme.of(context).textTheme.bodyMedium,
+                              ),
+                            ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -36,70 +101,50 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.only(bottom: 12),
+      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
       child: Container(
+        width: double.infinity,
         decoration: BoxDecoration(
-          color: theme.colorScheme.surface,
+          color: Colors.white,
+          boxShadow: const [
+            BoxShadow(
+              blurRadius: 4,
+              color: Color(0x1A000000),
+              offset: Offset(0, 2),
+            ),
+          ],
           borderRadius: BorderRadius.circular(12),
-          border: Border.all(color: theme.colorScheme.outlineVariant, width: 1),
         ),
-        child: ExpandableNotifier(
-          controller: _controller,
-          child: ExpandablePanel(
-            theme: const ExpandableThemeData(
-              tapHeaderToExpand: true,
-              tapBodyToExpand: false,
-              tapBodyToCollapse: false,
-              headerAlignment: ExpandablePanelHeaderAlignment.center,
-              hasIcon: true,
-              expandIcon: Icons.keyboard_arrow_down,
-              collapseIcon: Icons.keyboard_arrow_up,
-              iconPadding: EdgeInsets.all(18),
-            ),
-
-            // ---------------- HEADER ----------------
-            header: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Row(
-                children: [
-                  Checkbox(
-                    value: _isSelected,
-                    onChanged: (v) {
-                      setState(() => _isSelected = v ?? false);
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                  Expanded(
-                    child: Text(
-                      widget.allergyName,
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      style: theme.textTheme.titleMedium?.copyWith(
-                        fontWeight: FontWeight.w600,
-                      ),
+        child: Padding(
+          padding: const EdgeInsets.all(12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // Only the text is tappable
+              Expanded(
+                child: GestureDetector(
+                  onTap: _showAlternatives,
+                  child: Text(
+                    widget.allergyName,
+                    style: theme.textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w500,
+                      fontSize: 16,
                     ),
                   ),
-                ],
+                ),
               ),
-            ),
-
-            // ---------------- COLLAPSED ----------------
-            collapsed: const SizedBox.shrink(),
-
-            // ---------------- EXPANDED ----------------
-            expanded: Padding(
-              padding: const EdgeInsets.only(bottom: 12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (final name in widget.alternativeNames ?? [])
-                    Padding(
-                      padding: const EdgeInsets.fromLTRB(12, 6, 12, 0),
-                      child: Text(name, style: theme.textTheme.bodyMedium),
-                    ),
-                ],
+              Switch.adaptive(
+                value: _isSelected,
+                onChanged: (newValue) {
+                  setState(() {
+                    _isSelected = newValue;
+                  });
+                },
+                activeTrackColor: const Color(0xFFED260E),
+                inactiveTrackColor: theme.disabledColor,
+                inactiveThumbColor: theme.canvasColor,
               ),
-            ),
+            ],
           ),
         ),
       ),
