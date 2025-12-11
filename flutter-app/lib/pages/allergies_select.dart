@@ -143,7 +143,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                             item["stof"] ??
                             '', // Fallback to empty string if stof is null
                         alternativeNames:
-                            (item["synonyms"] as List?)
+                            (item["synoniemen"] as List?)
                                 ?.whereType<
                                   String
                                 >() // Only keep elements that are Strings
