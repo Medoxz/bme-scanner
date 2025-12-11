@@ -3,7 +3,7 @@
     "stof": "Potassium dichromate",
     "cas": "7778-50-9",
     "concentratie": 0.5,
-    "synoniemen ": [
+    "synoniemen": [
       "Chromaatzuur (H2Cr2O7), kaliumzout (1:2)",
       "Dichromaatzuur (H2Cr2O7), dikaliumzout",
       "Chromaatzuur (H2Cr2O7), kaliumzout (1:2)",
@@ -35,7 +35,7 @@
     "stof": "p-PHENYLENEDIAMINE (PPD)",
     "cas": "106-50-3",
     "concentratie": 1,
-    "synoniemen ": [
+    "synoniemen": [
       "1,4-benzeendiamine",
       "p-fenyleendiamine",
       "C.I. 76060",
@@ -91,7 +91,7 @@
     "stof": "Thiuram mix",
     "cas": "1405-10-02T23:42:30.000Z",
     "concentratie": 20,
-    "synoniemen ": [
+    "synoniemen": [
       "Neomycine, sulfaat (zout)",
       "Lidamycine crème",
       "Mycifradin N",
@@ -126,7 +126,7 @@
     "stof": "Neomycin sulfate",
     "cas": "1332-82-7 / 7646-79-9",
     "concentratie": 1,
-    "synoniemen ": [
+    "synoniemen": [
       "Kobaltchloride (CoCl₂)",
       "Kobalt(II)chloride",
       "Kobalt(II)chloride",
@@ -146,7 +146,7 @@
     "stof": "Cobalt(II)chloride hexahydrate",
     "cas": "10101-97-0",
     "concentratie": 5,
-    "synoniemen ": [
+    "synoniemen": [
       "Nikkel(II)sulfaat hexahydraat",
       "Zwavelzuur, nikkel(2+)-zout, hydraat (1:1:6)",
       "Zwavelzuur, nikkel(2+)-zout (1:1), hexahydraat",
@@ -173,7 +173,7 @@
     "stof": "Caine mix III",
     "cas": "868-77-9",
     "concentratie": 2,
-    "synoniemen ": [
+    "synoniemen": [
       "2-propeenzuur, 2-methyl-, 2-hydroxyethylester",
       "Methacrylzuur, 2-hydroxyethylester",
       "Methacrylzuur, ester met glycol",
@@ -232,7 +232,7 @@
     "stof": "Nickel(II)sulfate hexahydrate",
     "cas": "8050-07-08T22:00:00.000Z",
     "concentratie": 20,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -241,7 +241,7 @@
     "stof": "2-Hydroxyethyl methacrylate",
     "cas": "101-72-4",
     "concentratie": 0.1,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -250,7 +250,7 @@
     "stof": "COLOPHONIUM",
     "cas": "8006-54-0",
     "concentratie": 30,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -259,7 +259,7 @@
     "stof": "Paraben mix",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -268,7 +268,7 @@
     "stof": "N-Isopropyl-N-phenyl-4-phenylenediamine (IPPD)",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -277,7 +277,7 @@
     "stof": "LANOLIN ALCOHOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -286,7 +286,7 @@
     "stof": "Mercapto mix",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -295,7 +295,7 @@
     "stof": "Epoxy resin, Bisphenol A",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -304,7 +304,7 @@
     "stof": "Peru balsam",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -313,7 +313,7 @@
     "stof": "4-tert-Butylphenolformaldehyde resin (PTBP)",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -322,7 +322,7 @@
     "stof": "2-Mercaptobenzothiazole (MBT)",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -331,7 +331,7 @@
     "stof": "FORMALDEHYDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -340,7 +340,7 @@
     "stof": "Fragrance mix I",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -349,7 +349,7 @@
     "stof": "Sesquiterpene lactone mix",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -358,7 +358,7 @@
     "stof": "SODIUM METABISULFITE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -367,7 +367,7 @@
     "stof": "Propolis",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -376,7 +376,7 @@
     "stof": "METHYLISOTHIAZOLINONE+ METHYLCHLOROISOTHIAZOLINONE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -385,7 +385,7 @@
     "stof": "Budesonide",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -394,7 +394,7 @@
     "stof": "Tixocortol-21-pivalate",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -403,7 +403,7 @@
     "stof": "METHYLDIBROMO GLUTARONITRILE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -412,7 +412,7 @@
     "stof": "Fragrance mix II",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -421,7 +421,7 @@
     "stof": "HYDROXYISOHEXYL 3-CYCLOHEXENE CARBOXALDEHYDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -430,7 +430,7 @@
     "stof": "METHYLISOTHIAZOLINONE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -439,7 +439,7 @@
     "stof": "BENZISOTHIAZOLINONE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -448,7 +448,7 @@
     "stof": "Textile dye mix II",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -457,7 +457,7 @@
     "stof": "DECYL GLUCOSIDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -466,7 +466,7 @@
     "stof": "2-BROMO-2-NITROPROPANE-1,3-DIOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -475,7 +475,7 @@
     "stof": "DIAZOLIDINYL UREA",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -484,7 +484,7 @@
     "stof": "2-n-Octyl-4-isothiazolin-3-one",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -493,7 +493,7 @@
     "stof": "Compositae mix II",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -502,7 +502,7 @@
     "stof": "Hydroperoxides of Linalool",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -511,7 +511,7 @@
     "stof": "Hydroperoxides of Linalool",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -520,7 +520,7 @@
     "stof": "Hydroperoxides of Limonene",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -529,7 +529,7 @@
     "stof": "Hydroperoxides of Limonene",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -538,7 +538,7 @@
     "stof": "SORBITAN SESQUIOLEATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -547,7 +547,7 @@
     "stof": "SORBITAN OLEATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -556,7 +556,7 @@
     "stof": "ISOPROPYL MYRISTATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -565,7 +565,7 @@
     "stof": "Amerchol L-101",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -574,7 +574,7 @@
     "stof": "TRIETHANOLAMINE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -583,7 +583,7 @@
     "stof": "POLYSORBATE 80",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -592,7 +592,7 @@
     "stof": "2-tert-Butyl-4-methoxyphenol (BHA)",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -601,7 +601,7 @@
     "stof": "BHT",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -610,7 +610,7 @@
     "stof": "Octyl gallate",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -619,7 +619,7 @@
     "stof": "TRICLOSAN",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -628,7 +628,7 @@
     "stof": "SORBIC ACID",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -637,7 +637,7 @@
     "stof": "p-CHLORO-m-CRESOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -646,7 +646,7 @@
     "stof": "CHLOROXYLENOL (PCMX)",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -655,7 +655,7 @@
     "stof": "THIMEROSAL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -664,7 +664,7 @@
     "stof": "IMIDAZOLIDINYL UREA",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -673,7 +673,7 @@
     "stof": "METHENAMINE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -682,7 +682,7 @@
     "stof": "CHLORHEXIDINE DIGLUCONATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -691,7 +691,7 @@
     "stof": "PHENYL MERCURIC ACETATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -700,7 +700,7 @@
     "stof": "CHLOROACETAMIDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -709,7 +709,7 @@
     "stof": "Hexahydro-1,3,5-tris-(2-hydroxyethyl)triazine",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -718,7 +718,7 @@
     "stof": "Clioquinol",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -727,7 +727,7 @@
     "stof": "Ethylenediamine dihydrochloride",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -736,7 +736,7 @@
     "stof": "HYDROABIETYL ALCOHOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -745,7 +745,7 @@
     "stof": "PHENYL SALICYLATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -754,7 +754,7 @@
     "stof": "BENZOPHENONE-3",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -763,7 +763,7 @@
     "stof": "PROPYLENE GLYCOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -772,7 +772,7 @@
     "stof": "STEARYL ALCOHOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -781,7 +781,7 @@
     "stof": "CETYL ALCOHOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -790,7 +790,7 @@
     "stof": "BENZYL SALICYLATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -799,7 +799,7 @@
     "stof": "Sodium-2-pyridinethiol-1-oxide",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -808,7 +808,7 @@
     "stof": "COCAMIDOPROPYL BETAINE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -817,7 +817,7 @@
     "stof": "BENZYL ALCOHOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -826,7 +826,7 @@
     "stof": "t-BUTYL HYDROQUINONE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -835,7 +835,7 @@
     "stof": "DROMETRIZOLE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -844,7 +844,7 @@
     "stof": "PROPYL GALLATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -853,7 +853,7 @@
     "stof": "DODECYL GALLATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -862,7 +862,7 @@
     "stof": "QUATERNIUM-15",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -871,7 +871,7 @@
     "stof": "PHENOXYETHANOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -880,7 +880,7 @@
     "stof": "TOCOPHEROL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -889,7 +889,7 @@
     "stof": "DMDM HYDANTOIN",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -898,7 +898,7 @@
     "stof": "Tea Tree Oil oxidized",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -907,7 +907,7 @@
     "stof": "IODOPROPYNYL BUTYLCARBAMATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -916,7 +916,7 @@
     "stof": "3-(Dimethylamino)-1-propylamine",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -925,7 +925,7 @@
     "stof": "LAURYL POLYGLUCOSE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -934,7 +934,7 @@
     "stof": "Peppermint oil",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -943,7 +943,7 @@
     "stof": "SHELLAC",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -952,7 +952,7 @@
     "stof": "TOCOPHERYL ACETATE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -961,7 +961,7 @@
     "stof": "Turpentine oil oxidized",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -970,7 +970,7 @@
     "stof": "Musk mix",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -979,7 +979,7 @@
     "stof": "OLEAMIDOPROPYL DIMETHYLAMINE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -988,7 +988,7 @@
     "stof": "ETHYLHEXYLGLYCERIN",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -997,7 +997,7 @@
     "stof": "Gallate mix",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -1006,7 +1006,7 @@
     "stof": "CETEARYL GLUCOSIDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -1015,7 +1015,7 @@
     "stof": "PANTHENOL",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null
@@ -1024,7 +1024,7 @@
     "stof": "POLYAMINOPROPYL BIGUANIDE",
     "cas": null,
     "concentratie": null,
-    "synoniemen ": null,
+    "synoniemen": null,
     "kruisreacties": null,
     "vaak voorkomende gebruiken/rol": null,
     "bronnen": null

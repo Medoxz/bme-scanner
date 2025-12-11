@@ -18,7 +18,7 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
   bool _isSelected = false;
 
   void _showAlternatives() {
-    if (widget.alternativeNames == null || widget.alternativeNames!.isEmpty)
+    if (widget.alternativeNames == null) // || widget.alternativeNames!.isEmpty)
       return;
 
     showModalBottomSheet(
