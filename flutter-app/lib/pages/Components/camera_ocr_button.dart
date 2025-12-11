@@ -2,7 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
-import 'package:permission_handler/permission_handler.dart';
+// import 'package:permission_handler/permission_handler.dart';
 
 class CameraOCRButton extends StatefulWidget {
   final Function(String text, File image)? onTextRecognized;
@@ -35,12 +35,12 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
       return;
     }
 
-    PermissionStatus status = await Permission.camera.status;
+    // PermissionStatus status = await Permission.camera.status;
 
-    if (!status.isGranted) {
-      widget.onPermissionDenied?.call();
-      return;
-    }
+    // if (!status.isGranted) {
+    //   widget.onPermissionDenied?.call();
+    //   return;
+    // }
 
     if (picked == null) return;
 
