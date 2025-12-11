@@ -24,7 +24,7 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
     showModalBottomSheet(
       context: context,
       isScrollControlled: true,
-      isDismissible: true, // allows closing by tapping outside
+      isDismissible: true,
       backgroundColor: Colors.transparent,
       builder: (context) {
         final maxHeight = MediaQuery.of(context).size.height * 0.6;
@@ -58,10 +58,14 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        '${widget.allergyName} - Synonyms',
-                        style: Theme.of(context).textTheme.titleMedium
-                            ?.copyWith(fontWeight: FontWeight.w600),
+                      Expanded(
+                        child: Text(
+                          '${widget.allergyName} - Synonyms',
+                          maxLines: 3,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context).textTheme.titleMedium
+                              ?.copyWith(fontWeight: FontWeight.w600),
+                        ),
                       ),
                       IconButton(
                         icon: const Icon(Icons.close),
