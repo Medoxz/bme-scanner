@@ -69,10 +69,14 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
                     },
                   ),
                   const SizedBox(width: 12),
-                  Text(
-                    widget.allergyName,
-                    style: theme.textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.w600,
+                  Expanded(
+                    child: Text(
+                      widget.allergyName,
+                      maxLines: 2,
+                      overflow: TextOverflow.ellipsis,
+                      style: theme.textTheme.titleMedium?.copyWith(
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ],

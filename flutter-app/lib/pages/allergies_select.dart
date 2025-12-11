@@ -35,7 +35,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
 
   Future<void> _loadAllergies() async {
     final jsonString = await rootBundle.loadString(
-      'assets/alternative_names_asz.json',
+      'assets/data_synonyms_comprehensive.json',
     );
 
     final List<dynamic> jsonData = json.decode(jsonString);
@@ -56,7 +56,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
   Widget build(BuildContext context) {
     // Filter allergies based on search query
     final filtered = _allergies.where((item) {
-      final name = item["chemical_name"] ?? "";
+      final name = item["stof"] ?? "";
       return name.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
 
@@ -112,10 +112,16 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                       final item = filtered[index];
 
                       return AllergyListingWidget(
-                        allergyName: item["chemical_name"],
-                        alternativeNames: List<String>.from(
-                          item["alternative_names"] ?? [],
-                        ),
+                        allergyName:
+                            item["stof"] ??
+                            '', // Fallback to empty string if stof is null
+                        alternativeNames:
+                            (item["synonyms"] as List?)
+                                ?.whereType<
+                                  String
+                                >() // Only keep elements that are Strings
+                                .toList() ??
+                            [], // Fallback to empty list if synonyms is null
                       );
                     },
                   ),
