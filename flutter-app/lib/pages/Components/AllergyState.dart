@@ -39,6 +39,21 @@ class AllergyState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Future<void> tryServerUpdate() async {
+    //    In the background, try fetching latest JSON from Google Drive
+    //    This does NOT block the UI
+    jsonUpdater.updateJsonFile('allergies.json').then((file) async {
+      if (file != null) {
+        // Optionally, you could reload the UI with new data
+        final newData = await jsonUpdater.readLocalJson('allergies.json');
+        if (newData.isNotEmpty) {
+          allergies = List<Map<String, dynamic>>.from(newData);
+          notifyListeners();
+        }
+      }
+    });
+  }
+
   Future<void> _loadSelectedAllergies() async {
     final prefs = await SharedPreferences.getInstance();
     final stored = prefs.getStringList(_prefsKey) ?? [];
@@ -73,17 +88,6 @@ class AllergyState extends ChangeNotifier {
     allergies = List<Map<String, dynamic>>.from(jsonData);
     notifyListeners();
 
-    //    In the background, try fetching latest JSON from Google Drive
-    //    This does NOT block the UI
-    jsonUpdater.updateJsonFile('allergies.json').then((file) async {
-      if (file != null) {
-        // Optionally, you could reload the UI with new data
-        final newData = await jsonUpdater.readLocalJson('allergies.json');
-        if (newData.isNotEmpty) {
-          allergies = List<Map<String, dynamic>>.from(newData);
-          notifyListeners();
-        }
-      }
-    });
+    tryServerUpdate();
   }
 }
