@@ -47,7 +47,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
     // If local copy does not exist or is empty, fall back to assets
     if (jsonData.isEmpty) {
       final jsonString = await rootBundle.loadString(
-        'assets/data_synonyms_comprehensive.json',
+        'assets/Data_app_export.json',
       );
       jsonData = json.decode(jsonString);
     }

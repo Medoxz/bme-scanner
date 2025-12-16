@@ -105,7 +105,7 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
     final theme = Theme.of(context);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 8),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
       child: Container(
         width: double.infinity,
         decoration: BoxDecoration(
