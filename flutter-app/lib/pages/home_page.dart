@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Components/AllergyState.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -21,6 +23,13 @@ class HomePage extends StatelessWidget {
             Text(
               "Easily scan product ingredients to check for allergens.",
               style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10),
+            Text(
+              context.watch<AllergyState>().selectedAllergies.isEmpty
+                  ? "No allergies selected. \nClick selected allergies below to add."
+                  : "You have selected ${context.watch<AllergyState>().selectedAllergies.length} allergies. \nClick Scan below to start scanning.",
               textAlign: TextAlign.center,
             ),
           ],

@@ -1,25 +1,21 @@
 import 'package:flutter/material.dart';
 
-class AllergyListingWidget extends StatefulWidget {
+class AllergyListingWidget extends StatelessWidget {
   const AllergyListingWidget({
     super.key,
     this.allergyName = "Example allergy",
     required this.alternativeNames,
+    required this.isSelected,
+    required this.onChanged,
   });
 
   final String allergyName;
   final List<String>? alternativeNames;
+  final bool isSelected;
+  final ValueChanged<bool> onChanged;
 
-  @override
-  State<AllergyListingWidget> createState() => _AllergyListingWidgetState();
-}
-
-class _AllergyListingWidgetState extends State<AllergyListingWidget> {
-  bool _isSelected = false;
-
-  void _showAlternatives() {
-    if (widget.alternativeNames == null) // || widget.alternativeNames!.isEmpty)
-      return;
+  void _showAlternatives(BuildContext context) {
+    if (alternativeNames == null || alternativeNames!.isEmpty) return;
 
     showModalBottomSheet(
       context: context,
@@ -54,13 +50,12 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Header row with title and close button
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Expanded(
                         child: Text(
-                          '${widget.allergyName} - Synonyms',
+                          '$allergyName - Synonyms',
                           maxLines: 3,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context).textTheme.titleMedium
@@ -79,7 +74,7 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          for (final name in widget.alternativeNames!)
+                          for (final name in alternativeNames!)
                             Padding(
                               padding: const EdgeInsets.symmetric(vertical: 4),
                               child: Text(
@@ -124,12 +119,11 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              // Only the text is tappable
               Expanded(
                 child: GestureDetector(
-                  onTap: _showAlternatives,
+                  onTap: () => _showAlternatives(context),
                   child: Text(
-                    widget.allergyName,
+                    allergyName,
                     style: theme.textTheme.bodyLarge?.copyWith(
                       fontWeight: FontWeight.w500,
                       fontSize: 16,
@@ -138,12 +132,8 @@ class _AllergyListingWidgetState extends State<AllergyListingWidget> {
                 ),
               ),
               Switch.adaptive(
-                value: _isSelected,
-                onChanged: (newValue) {
-                  setState(() {
-                    _isSelected = newValue;
-                  });
-                },
+                value: isSelected,
+                onChanged: onChanged,
                 activeTrackColor: const Color(0xFFED260E),
                 inactiveTrackColor: theme.disabledColor,
                 inactiveThumbColor: theme.canvasColor,

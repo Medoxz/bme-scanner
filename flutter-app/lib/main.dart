@@ -1,10 +1,17 @@
 import 'package:bme_scanner/pages/allergies_select.dart';
 import 'package:bme_scanner/pages/camera_ocr_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'pages/Components/AllergyState.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  runApp(const IngredientScannerApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (_) => AllergyState(),
+      child: const IngredientScannerApp(),
+    ),
+  );
 }
 
 class IngredientScannerApp extends StatelessWidget {

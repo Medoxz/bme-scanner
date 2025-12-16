@@ -1,8 +1,7 @@
-import 'dart:convert';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'Components/AllergyState.dart';
 import 'Components/allergy_listing.dart';
-import 'Components/json_updater.dart';
 
 class AllergiesSelectPage extends StatefulWidget {
   const AllergiesSelectPage({super.key});
@@ -17,60 +16,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Sample allergy list; replace with your real data source
-  List<Map<String, dynamic>> _allergies = [
-    {
-      "chemical_name": "Example Allergen 1",
-      "file": "Allergie voor Example",
-      "alternative_names": ["Alternative 1", "Alternative 2"],
-    },
-  ];
-
-  final JsonUpdater jsonUpdater = JsonUpdater(
-    googleDriveFileId: '1BnWPiWg9KjV-_mv7yYYm20R74Xg5Mnj7',
-  );
-
   String _searchQuery = '';
-
-  @override
-  void initState() {
-    super.initState();
-    _loadAllergies();
-  }
-
-  Future<void> _loadAllergies() async {
-    List<dynamic> jsonData = [];
-
-    // Try reading local copy first
-    jsonData = await jsonUpdater.readLocalJson('allergies.json');
-
-    // If local copy does not exist or is empty, fall back to assets
-    if (jsonData.isEmpty) {
-      final jsonString = await rootBundle.loadString(
-        'assets/Data_app_export.json',
-      );
-      jsonData = json.decode(jsonString);
-    }
-
-    // Update state immediately to display allergies
-    setState(() {
-      _allergies = List<Map<String, dynamic>>.from(jsonData);
-    });
-
-    //    In the background, try fetching latest JSON from Google Drive
-    //    This does NOT block the UI
-    jsonUpdater.updateJsonFile('allergies.json').then((file) async {
-      if (file != null) {
-        // Optionally, you could reload the UI with new data
-        final newData = await jsonUpdater.readLocalJson('allergies.json');
-        if (newData.isNotEmpty) {
-          setState(() {
-            _allergies = List<Map<String, dynamic>>.from(newData);
-          });
-        }
-      }
-    });
-  }
 
   @override
   void dispose() {
@@ -81,8 +27,10 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
 
   @override
   Widget build(BuildContext context) {
+    final allergyState = context.watch<AllergyState>();
+
     // Filter allergies based on search query
-    final filtered = _allergies.where((item) {
+    final filtered = allergyState.allergies.where((item) {
       final name = item["stof"] ?? "";
       return name.toLowerCase().contains(_searchQuery.toLowerCase());
     }).toList();
@@ -137,18 +85,19 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final item = filtered[index];
+                      final name = item["stof"];
 
                       return AllergyListingWidget(
-                        allergyName:
-                            item["stof"] ??
-                            '', // Fallback to empty string if stof is null
+                        allergyName: name,
                         alternativeNames:
                             (item["synoniemen"] as List?)
-                                ?.whereType<
-                                  String
-                                >() // Only keep elements that are Strings
+                                ?.whereType<String>()
                                 .toList() ??
-                            [], // Fallback to empty list if synonyms is null
+                            [],
+                        isSelected: allergyState.isSelected(name),
+                        onChanged: (isSelected) {
+                          allergyState.setSelected(name, isSelected);
+                        },
                       );
                     },
                   ),

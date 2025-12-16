@@ -31,7 +31,6 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                 });
               },
               onPermissionDenied: () {
-                print("Camera permission denied.");
                 final messenger = ScaffoldMessenger.of(context);
                 messenger.hideCurrentSnackBar();
                 messenger.showSnackBar(
