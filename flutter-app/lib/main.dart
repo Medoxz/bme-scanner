@@ -52,10 +52,12 @@ class _MainNavigationState extends State<MainNavigation> {
         currentIndex: _selectedIndex,
         selectedItemColor: Colors.green,
         onTap: (index) {
-          context.watch<AllergyState>().tryServerUpdate();
           setState(() {
             _selectedIndex = index;
           });
+          if (index == 0) {
+            Provider.of<AllergyState>(context, listen: false).tryServerUpdate();
+          }
         },
         items: const [
           BottomNavigationBarItem(

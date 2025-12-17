@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:bme_scanner/pages/Components/camera_ocr_button.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'Components/ocr_result_bottom_sheet.dart';
 
 class CameraOCRPage extends StatefulWidget {
   const CameraOCRPage({super.key});
@@ -29,6 +30,20 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                   _recognizedText = text;
                   _imageFile = image;
                 });
+
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(16),
+                    ),
+                  ),
+                  builder: (_) => OCRResultBottomSheet(
+                    imageFile: image,
+                    recognizedText: text,
+                  ),
+                );
               },
               onPermissionDenied: () {
                 final messenger = ScaffoldMessenger.of(context);
