@@ -107,7 +107,7 @@ class AllergyListingWidget extends StatelessWidget {
                         ),
                       if (concentratie.isNotEmpty)
                         Chip(
-                          label: Text('Concentratie: $concentratie%'),
+                          label: Text('Concentratie: $concentratie'),
                           visualDensity: VisualDensity.compact,
                         ),
                     ],
