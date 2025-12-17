@@ -59,10 +59,13 @@ class _OCRResultTileState extends State<OCRResultTile> {
                   final String parent = (a['stof'] ?? '').toString();
                   final List<dynamic> rawSyns =
                       (a['synoniemen'] as List<dynamic>?) ?? [];
+                  final List<dynamic> rawKruis =
+                      (a['kruisreacties'] as List<dynamic>?) ?? [];
+                  final List<dynamic> rawAll = [...rawSyns, ...rawKruis];
                   // include the parent name itself plus all synonyms
                   final Iterable<String> allCandidates = [
                     parent,
-                    ...rawSyns.map((s) => s.toString()),
+                    ...rawAll.map((s) => s.toString()),
                   ];
                   return allCandidates.map(
                     (syn) => {'allergy': parent, 'synonym': syn},
@@ -265,31 +268,46 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                                 return Wrap(
                                                   spacing: 8,
                                                   runSpacing: 8,
-                                                  children: matchedAllergies.map(
-                                                    (allergy) {
-                                                      return ConstrainedBox(
-                                                        constraints:
-                                                            BoxConstraints(
-                                                              maxWidth:
-                                                                  maxChipWidth,
-                                                            ),
-                                                        child: Chip(
-                                                          label: Text(
-                                                            allergy,
-                                                            maxLines: 2,
-                                                            softWrap: true,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
+                                                  children: matchedAllergies.map((
+                                                    allergy,
+                                                  ) {
+                                                    return ConstrainedBox(
+                                                      constraints:
+                                                          BoxConstraints(
+                                                            maxWidth:
+                                                                maxChipWidth,
                                                           ),
-                                                          backgroundColor:
-                                                              Colors
-                                                                  .red
-                                                                  .shade100,
+                                                      child: Container(
+                                                        padding:
+                                                            const EdgeInsets.symmetric(
+                                                              horizontal: 12,
+                                                              vertical: 10,
+                                                            ),
+                                                        margin:
+                                                            const EdgeInsets.only(
+                                                              bottom: 0,
+                                                            ),
+                                                        decoration: BoxDecoration(
+                                                          color: Colors
+                                                              .red
+                                                              .shade100,
+                                                          borderRadius:
+                                                              BorderRadius.circular(
+                                                                16,
+                                                              ),
                                                         ),
-                                                      );
-                                                    },
-                                                  ).toList(),
+                                                        child: Text(
+                                                          allergy,
+                                                          softWrap: true,
+                                                          maxLines: null,
+                                                          style:
+                                                              const TextStyle(
+                                                                fontSize: 14,
+                                                              ),
+                                                        ),
+                                                      ),
+                                                    );
+                                                  }).toList(),
                                                 );
                                               },
                                             ),
@@ -441,22 +459,22 @@ class _OCRResultTileState extends State<OCRResultTile> {
                 const SizedBox(width: 12),
 
                 // Status icon + edit button
-                Column(
+                Row(
                   mainAxisSize: MainAxisSize.min,
                   children: [
-                    Icon(
-                      hasMatches ? Icons.cancel : Icons.check_circle,
-                      color: hasMatches ? Colors.red : Colors.green,
-                      size: 28,
-                    ),
-                    const SizedBox(height: 6),
                     // Keep a small edit affordance (tapping either the tile or this opens sheet)
                     IconButton(
                       padding: EdgeInsets.zero,
                       constraints: const BoxConstraints(),
-                      icon: const Icon(Icons.edit, size: 20),
+                      icon: const Icon(Icons.edit, size: 16),
                       onPressed: () => _showBottomSheet(context),
                       tooltip: 'Edit scan',
+                    ),
+                    const SizedBox(height: 6),
+                    Icon(
+                      hasMatches ? Icons.cancel : Icons.check_circle,
+                      color: hasMatches ? Colors.red : Colors.green,
+                      size: 50,
                     ),
                   ],
                 ),

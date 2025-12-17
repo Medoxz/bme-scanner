@@ -76,7 +76,18 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
           Positioned.fill(
             child: ElevatedButton(
               onPressed: _performScan,
-              child: const Icon(Icons.camera_alt),
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Icon(Icons.camera_alt, size: 24, color: Colors.white),
+                  SizedBox(width: 8),
+                  const Text(
+                    "Scan Product",
+                    style: TextStyle(color: Colors.white, fontSize: 24),
+                  ),
+                ],
+              ),
             ),
           ),
           if (_isProcessing)

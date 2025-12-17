@@ -33,7 +33,7 @@ class ScanHistoryState extends ChangeNotifier {
       matchedAllergens: matchedAllergens,
       timestamp: timestamp ?? DateTime.now(),
     );
-    _history.add(result);
+    _history.insert(0, result);
     notifyListeners();
     saveToPrefs();
   }

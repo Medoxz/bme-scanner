@@ -104,12 +104,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                       final name = item["stof"];
 
                       return AllergyListingWidget(
-                        allergyName: name,
-                        alternativeNames:
-                            (item["synoniemen"] as List?)
-                                ?.whereType<String>()
-                                .toList() ??
-                            [],
+                        item: item,
                         isSelected: allergyState.isSelected(name),
                         onChanged: (isSelected) {
                           allergyState.setSelected(name, isSelected);
