@@ -15,13 +15,14 @@ class ScanHistoryState extends ChangeNotifier {
     loadFromPrefs();
   }
 
-  /// Add a new scan result
+  // inside ScanHistoryState (addScan)
   void addScan({
     required String title,
     required String recognizedText,
     required File imageFile,
     required bool allergensDetected,
     required List<String> matchedAllergens,
+    DateTime? timestamp, // optional param
   }) {
     final result = ScanResult(
       id: _uuid.v4(),
@@ -30,6 +31,7 @@ class ScanHistoryState extends ChangeNotifier {
       imagePath: imageFile.path,
       allergensDetected: allergensDetected,
       matchedAllergens: matchedAllergens,
+      timestamp: timestamp ?? DateTime.now(),
     );
     _history.add(result);
     notifyListeners();
@@ -44,6 +46,7 @@ class ScanHistoryState extends ChangeNotifier {
     File? imageFile,
     bool? allergensDetected,
     List<String>? matchedAllergens,
+    DateTime? timestamp,
   }) {
     final index = _history.indexWhere((r) => r.id == id);
     if (index == -1) return;
@@ -55,6 +58,7 @@ class ScanHistoryState extends ChangeNotifier {
       imagePath: imageFile?.path,
       allergensDetected: allergensDetected,
       matchedAllergens: matchedAllergens,
+      timestamp: timestamp,
     );
     notifyListeners();
     saveToPrefs();
@@ -99,9 +103,10 @@ class ScanResult {
   final String id;
   final String title;
   final String recognizedText;
-  final String imagePath; // store the file path
+  final String imagePath;
   final bool allergensDetected;
   final List<String> matchedAllergens;
+  final DateTime timestamp;
 
   ScanResult({
     required this.id,
@@ -110,6 +115,7 @@ class ScanResult {
     required this.imagePath,
     required this.allergensDetected,
     required this.matchedAllergens,
+    required this.timestamp,
   });
 
   ScanResult copyWith({
@@ -118,6 +124,7 @@ class ScanResult {
     String? imagePath,
     bool? allergensDetected,
     List<String>? matchedAllergens,
+    DateTime? timestamp,
   }) {
     return ScanResult(
       id: id,
@@ -126,6 +133,7 @@ class ScanResult {
       imagePath: imagePath ?? this.imagePath,
       allergensDetected: allergensDetected ?? this.allergensDetected,
       matchedAllergens: matchedAllergens ?? this.matchedAllergens,
+      timestamp: timestamp ?? this.timestamp,
     );
   }
 
@@ -136,6 +144,7 @@ class ScanResult {
     'imagePath': imagePath,
     'allergensDetected': allergensDetected,
     'matchedAllergens': matchedAllergens,
+    'timestamp': timestamp.toIso8601String(), // store as ISO string
   };
 
   factory ScanResult.fromJson(Map<String, dynamic> json) {
@@ -146,6 +155,9 @@ class ScanResult {
       imagePath: json['imagePath'],
       allergensDetected: json['allergensDetected'],
       matchedAllergens: List<String>.from(json['matchedAllergens']),
+      timestamp: DateTime.parse(
+        json['timestamp'] ?? DateTime.now().toIso8601String(),
+      ),
     );
   }
 

@@ -33,9 +33,38 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                     .read<AllergyState>()
                     .selectedAllergies;
                 final lowerText = text.toLowerCase();
-                final matchedAllergens = selectedAllergies
-                    .where((a) => lowerText.contains(a.toLowerCase()))
+
+                List<Map<String, String>> selectedAllergySynonyms = context
+                    .read<AllergyState>()
+                    .allergies
+                    .where((a) => selectedAllergies.contains(a['stof']))
+                    .expand((a) {
+                      final String parent = (a['stof'] ?? '').toString();
+                      final List<dynamic> rawSyns =
+                          (a['synoniemen'] as List<dynamic>?) ?? [];
+                      // include the parent name itself plus all synonyms
+                      final Iterable<String> allCandidates = [
+                        parent,
+                        ...rawSyns.map((s) => s.toString()),
+                      ];
+                      return allCandidates.map(
+                        (syn) => {'allergy': parent, 'synonym': syn},
+                      );
+                    })
                     .toList();
+
+                final matchedAllergens = selectedAllergySynonyms
+                    .where(
+                      (allergy) =>
+                          lowerText.contains(allergy['synonym']!.toLowerCase()),
+                    )
+                    .map(
+                      (allergy) =>
+                          '${allergy['synonym']} ( van: ${allergy['allergy']})',
+                    )
+                    .toSet()
+                    .toList();
+
                 final allergensDetected = matchedAllergens.isNotEmpty;
 
                 // Add scan to history
@@ -45,6 +74,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                   imageFile: image,
                   allergensDetected: allergensDetected,
                   matchedAllergens: matchedAllergens,
+                  timestamp: DateTime.now(),
                 );
               },
               onPermissionDenied: () {
