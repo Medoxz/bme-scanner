@@ -48,7 +48,23 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
             IconButton(
               icon: const Icon(Icons.info_outline),
               onPressed: () {
-                print('Info button pressed');
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Allergy Information'),
+                    content: const Text(
+                      'Select your allergies from the list. \n\n'
+                      'You can search for specific allergies using the search bar. \n\n'
+                      'These selections will be used to identify potential allergens in scanned products.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ],

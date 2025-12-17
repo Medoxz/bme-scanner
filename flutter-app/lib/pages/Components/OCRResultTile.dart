@@ -109,181 +109,206 @@ class _OCRResultTileState extends State<OCRResultTile> {
                     top: 12,
                     bottom: MediaQuery.of(context).viewInsets.bottom + 16,
                   ),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      // --- Replace the existing Row(...) with this ---
-                      SizedBox(
-                        height: 40,
-                        child: Stack(
-                          children: [
-                            // centered drag handle
-                            Align(
-                              alignment: Alignment.topCenter,
-                              child: Container(
-                                width: 40,
-                                height: 4,
-                                margin: const EdgeInsets.only(top: 6),
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade400,
-                                  borderRadius: BorderRadius.circular(2),
-                                ),
-                              ),
-                            ),
-
-                            // Save button at top-right
-                            Positioned(
-                              right: 0,
-                              top: 0,
-                              child: TextButton(
-                                style: TextButton.styleFrom(
-                                  padding: const EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 8,
-                                  ),
-                                  minimumSize: const Size(48, 36),
-                                  tapTargetSize:
-                                      MaterialTapTargetSize.shrinkWrap,
-                                ),
-                                onPressed: () {
-                                  Provider.of<ScanHistoryState>(
-                                    context,
-                                    listen: false,
-                                  ).editScan(
-                                    widget.scanId,
-                                    title: titleController.text,
-                                    recognizedText: textController.text,
-                                    allergensDetected: hasMatches,
-                                    matchedAllergens: matchedAllergies,
-                                  );
-                                  Navigator.of(context).pop();
-                                },
-                                child: Text(
-                                  'Save',
-                                  style: TextStyle(
-                                    color: Theme.of(context).primaryColor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      const SizedBox(height: 4),
-
-                      // Row: editable title (left) + status icon (right)
-                      Row(
-                        children: [
-                          // left half: editable title (50%)
-                          Expanded(
-                            flex: 1,
-                            child: TextField(
-                              controller: titleController,
-                              decoration: InputDecoration(
-                                hintText: 'Title',
-                                contentPadding: const EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 12,
-                                ),
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                              ),
-                              maxLines: 1,
-                            ),
-                          ),
-
-                          // right half: status icon (50%)
-                          Expanded(
-                            flex: 1,
-                            child: Center(
-                              child: Icon(
-                                hasMatches ? Icons.cancel : Icons.check_circle,
-                                color: hasMatches ? Colors.red : Colors.green,
-                                size: 56,
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-
-                      const SizedBox(height: 16),
-
-                      // Image + allergen info
-                      Row(
+                  child: ConstrainedBox(
+                    constraints: BoxConstraints(maxHeight: maxHeight),
+                    child: SingleChildScrollView(
+                      physics: const BouncingScrollPhysics(),
+                      child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Expanded(
-                            flex: 1,
-                            child: ClipRRect(
-                              borderRadius: BorderRadius.circular(12),
-                              child: Image.file(
-                                widget.imageFile,
-                                fit: BoxFit.cover,
-                              ),
+                          // Top area: centered drag handle + Save at top-right
+                          SizedBox(
+                            height: 40,
+                            child: Stack(
+                              children: [
+                                Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Container(
+                                    width: 40,
+                                    height: 4,
+                                    margin: const EdgeInsets.only(top: 6),
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.shade400,
+                                      borderRadius: BorderRadius.circular(2),
+                                    ),
+                                  ),
+                                ),
+                                Positioned(
+                                  right: 0,
+                                  top: 0,
+                                  child: TextButton(
+                                    style: TextButton.styleFrom(
+                                      padding: const EdgeInsets.symmetric(
+                                        horizontal: 8,
+                                        vertical: 8,
+                                      ),
+                                      minimumSize: const Size(48, 36),
+                                      tapTargetSize:
+                                          MaterialTapTargetSize.shrinkWrap,
+                                    ),
+                                    onPressed: () {
+                                      Provider.of<ScanHistoryState>(
+                                        context,
+                                        listen: false,
+                                      ).editScan(
+                                        widget.scanId,
+                                        title: titleController.text,
+                                        recognizedText: textController.text,
+                                        allergensDetected: hasMatches,
+                                        matchedAllergens: matchedAllergies,
+                                      );
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text(
+                                      'Save',
+                                      style: TextStyle(
+                                        color: Theme.of(context).primaryColor,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
-                          const SizedBox(width: 12),
-                          Expanded(
-                            flex: 1,
-                            child: hasMatches
-                                ? Wrap(
-                                    spacing: 8,
-                                    runSpacing: 8,
-                                    children: matchedAllergies
-                                        .map(
-                                          (allergy) => Chip(
-                                            label: Text(
-                                              allergy,
-                                              maxLines: 2,
-                                              softWrap: true,
-                                            ),
-                                            backgroundColor:
-                                                Colors.red.shade100,
-                                          ),
-                                        )
-                                        .toList(),
-                                  )
-                                : const Text(
-                                    "No allergens detected",
-                                    style: TextStyle(fontSize: 16),
+
+                          const SizedBox(height: 4),
+
+                          // Title (left) + Status icon (right)
+                          Row(
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: TextField(
+                                  controller: titleController,
+                                  decoration: InputDecoration(
+                                    hintText: 'Title',
+                                    contentPadding: const EdgeInsets.symmetric(
+                                      horizontal: 12,
+                                      vertical: 12,
+                                    ),
+                                    border: OutlineInputBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
                                   ),
+                                  maxLines: 1,
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              SizedBox(
+                                width: 56, // fixed width for the icon column
+                                height: 56,
+                                child: Center(
+                                  child: Icon(
+                                    hasMatches
+                                        ? Icons.cancel
+                                        : Icons.check_circle,
+                                    color: hasMatches
+                                        ? Colors.red
+                                        : Colors.green,
+                                    size: 56,
+                                  ),
+                                ),
+                              ),
+                            ],
                           ),
-                        ],
-                      ),
 
-                      const SizedBox(height: 24),
+                          const SizedBox(height: 16),
 
-                      const Text(
-                        "Recognized Text",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      const SizedBox(height: 8),
+                          // Image + allergen info: give image a fixed height so layout is predictable
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Expanded(
+                                flex: 1,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(12),
+                                  child: SizedBox(
+                                    height: 150,
+                                    child: Image.file(
+                                      widget.imageFile,
+                                      fit: BoxFit.cover,
+                                      width: double.infinity,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              const SizedBox(width: 12),
+                              Expanded(
+                                flex: 1,
+                                child: hasMatches
+                                    ? LayoutBuilder(
+                                        builder: (context, constraints) {
+                                          final double maxChipWidth =
+                                              constraints.maxWidth * 0.9;
+                                          return Wrap(
+                                            spacing: 8,
+                                            runSpacing: 8,
+                                            children: matchedAllergies.map((
+                                              allergy,
+                                            ) {
+                                              return ConstrainedBox(
+                                                constraints: BoxConstraints(
+                                                  maxWidth: maxChipWidth,
+                                                ),
+                                                child: Chip(
+                                                  label: Text(
+                                                    allergy,
+                                                    maxLines: 2,
+                                                    softWrap: true,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                  ),
+                                                  backgroundColor:
+                                                      Colors.red.shade100,
+                                                ),
+                                              );
+                                            }).toList(),
+                                          );
+                                        },
+                                      )
+                                    : const Text(
+                                        "No allergens detected",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
+                              ),
+                            ],
+                          ),
 
-                      // Expanded scrollable editable text area
-                      Expanded(
-                        child: SingleChildScrollView(
-                          child: TextField(
+                          const SizedBox(height: 24),
+
+                          const Text(
+                            "Recognized Text",
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          const SizedBox(height: 8),
+
+                          // Editable text area — do NOT wrap this in its own scroll view.
+                          // It will grow with content and the whole sheet will scroll.
+                          TextField(
                             controller: textController,
-                            maxLines: null,
+                            maxLines:
+                                null, // allow multiline and let sheet scroll
                             decoration: const InputDecoration(
                               border: OutlineInputBorder(),
                               hintText: "Edit recognized text here...",
                             ),
                             onChanged: (_) {
-                              // trigger rebuild of sheet UI to update matches
-                              setState(() {});
+                              setState(
+                                () {},
+                              ); // update matches when text changes
                             },
                           ),
-                        ),
+
+                          // Add some spacing at the bottom so content isn't flush with keyboard
+                          SizedBox(height: 16),
+                        ],
                       ),
-                    ],
+                    ),
                   ),
                 ),
               ),

@@ -56,7 +56,6 @@ class ScanHistoryState extends ChangeNotifier {
       allergensDetected: allergensDetected,
       matchedAllergens: matchedAllergens,
     );
-    print('Edited scan: ${_history[index].toJson()}');
     notifyListeners();
     saveToPrefs();
   }
