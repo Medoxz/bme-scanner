@@ -1,8 +1,10 @@
-import 'dart:io';
 import 'package:bme_scanner/pages/Components/camera_ocr_button.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'Components/ocr_result_bottom_sheet.dart';
+import 'package:provider/provider.dart';
+import 'Components/OCRResultTile.dart';
+import 'Components/ScanHistoryState.dart';
+import 'Components/AllergyState.dart';
 
 class CameraOCRPage extends StatefulWidget {
   const CameraOCRPage({super.key});
@@ -12,11 +14,10 @@ class CameraOCRPage extends StatefulWidget {
 }
 
 class _CameraOCRPageState extends State<CameraOCRPage> {
-  File? _imageFile;
-  String _recognizedText = "No scan yet.";
-
   @override
   Widget build(BuildContext context) {
+    final scanHistory = context.watch<ScanHistoryState>();
+
     return Scaffold(
       appBar: AppBar(title: const Text("Camera OCR")),
 
@@ -24,25 +25,26 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
+            /// Camera OCR button
             CameraOCRButton(
               onTextRecognized: (text, image) {
-                setState(() {
-                  _recognizedText = text;
-                  _imageFile = image;
-                });
+                // Compute allergens
+                final selectedAllergies = context
+                    .read<AllergyState>()
+                    .selectedAllergies;
+                final lowerText = text.toLowerCase();
+                final matchedAllergens = selectedAllergies
+                    .where((a) => lowerText.contains(a.toLowerCase()))
+                    .toList();
+                final allergensDetected = matchedAllergens.isNotEmpty;
 
-                showModalBottomSheet(
-                  context: context,
-                  isScrollControlled: true,
-                  shape: const RoundedRectangleBorder(
-                    borderRadius: BorderRadius.vertical(
-                      top: Radius.circular(16),
-                    ),
-                  ),
-                  builder: (_) => OCRResultBottomSheet(
-                    imageFile: image,
-                    recognizedText: text,
-                  ),
+                // Add scan to history
+                context.read<ScanHistoryState>().addScan(
+                  title: "Scan ${scanHistory.history.length + 1}",
+                  recognizedText: text,
+                  imageFile: image,
+                  allergensDetected: allergensDetected,
+                  matchedAllergens: matchedAllergens,
                 );
               },
               onPermissionDenied: () {
@@ -50,7 +52,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                 messenger.hideCurrentSnackBar();
                 messenger.showSnackBar(
                   SnackBar(
-                    content: Text("Allow camera access."),
+                    content: const Text("Allow camera access."),
                     action: SnackBarAction(
                       label: "Settings",
                       onPressed: openAppSettings,
@@ -62,25 +64,27 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 
             const SizedBox(height: 16),
 
-            if (_imageFile != null) Image.file(_imageFile!, height: 250),
-
-            const SizedBox(height: 16),
-            const Text(
-              "Recognized Text:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-            ),
-
-            const SizedBox(height: 8),
-
+            /// Scan history list
             Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  _recognizedText.isEmpty
-                      ? "No Recognized text."
-                      : _recognizedText,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
+              child: scanHistory.history.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No scans yet.",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: scanHistory.history.length,
+                      itemBuilder: (context, index) {
+                        final scan = scanHistory.history[index];
+                        return OCRResultTile(
+                          scanId: scan.id,
+                          title: scan.title,
+                          recognizedText: scan.recognizedText,
+                          imageFile: scan.imageFile,
+                        );
+                      },
+                    ),
             ),
           ],
         ),

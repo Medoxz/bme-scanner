@@ -3,12 +3,16 @@ import 'package:bme_scanner/pages/camera_ocr_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'pages/Components/AllergyState.dart';
+import 'pages/Components/ScanHistoryState.dart';
 import 'pages/home_page.dart';
 
 void main() {
   runApp(
-    ChangeNotifierProvider(
-      create: (_) => AllergyState(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AllergyState()),
+        ChangeNotifierProvider(create: (_) => ScanHistoryState()),
+      ],
       child: const IngredientScannerApp(),
     ),
   );
