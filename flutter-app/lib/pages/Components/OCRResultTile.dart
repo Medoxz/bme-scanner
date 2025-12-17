@@ -202,18 +202,21 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                   ),
                                 ),
                                 const SizedBox(width: 12),
-                                SizedBox(
-                                  width: 56, // fixed width for the icon column
-                                  height: 56,
-                                  child: Center(
-                                    child: Icon(
-                                      hasMatches
-                                          ? Icons.cancel
-                                          : Icons.check_circle,
-                                      color: hasMatches
-                                          ? Colors.red
-                                          : Colors.green,
-                                      size: 56,
+                                Expanded(
+                                  flex: 1,
+                                  child: SizedBox(
+                                    width: 56,
+                                    height: 56,
+                                    child: Center(
+                                      child: Icon(
+                                        hasMatches
+                                            ? Icons.cancel
+                                            : Icons.check_circle,
+                                        color: hasMatches
+                                            ? Colors.red
+                                            : Colors.green,
+                                        size: 56,
+                                      ),
                                     ),
                                   ),
                                 ),
@@ -244,35 +247,53 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                 Expanded(
                                   flex: 1,
                                   child: hasMatches
-                                      ? LayoutBuilder(
-                                          builder: (context, constraints) {
-                                            final double maxChipWidth =
-                                                constraints.maxWidth * 0.9;
-                                            return Wrap(
-                                              spacing: 8,
-                                              runSpacing: 8,
-                                              children: matchedAllergies.map((
-                                                allergy,
-                                              ) {
-                                                return ConstrainedBox(
-                                                  constraints: BoxConstraints(
-                                                    maxWidth: maxChipWidth,
-                                                  ),
-                                                  child: Chip(
-                                                    label: Text(
-                                                      allergy,
-                                                      maxLines: 2,
-                                                      softWrap: true,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                    ),
-                                                    backgroundColor:
-                                                        Colors.red.shade100,
-                                                  ),
+                                      ? Column(
+                                          children: [
+                                            Text(
+                                              "Detected Allergens",
+                                              style: TextStyle(
+                                                fontSize: 16,
+                                                fontWeight: FontWeight.bold,
+                                                color: Colors.red.shade700,
+                                              ),
+                                            ),
+                                            SizedBox(height: 8),
+                                            LayoutBuilder(
+                                              builder: (context, constraints) {
+                                                final double maxChipWidth =
+                                                    constraints.maxWidth * 0.9;
+                                                return Wrap(
+                                                  spacing: 8,
+                                                  runSpacing: 8,
+                                                  children: matchedAllergies.map(
+                                                    (allergy) {
+                                                      return ConstrainedBox(
+                                                        constraints:
+                                                            BoxConstraints(
+                                                              maxWidth:
+                                                                  maxChipWidth,
+                                                            ),
+                                                        child: Chip(
+                                                          label: Text(
+                                                            allergy,
+                                                            maxLines: 2,
+                                                            softWrap: true,
+                                                            overflow:
+                                                                TextOverflow
+                                                                    .ellipsis,
+                                                          ),
+                                                          backgroundColor:
+                                                              Colors
+                                                                  .red
+                                                                  .shade100,
+                                                        ),
+                                                      );
+                                                    },
+                                                  ).toList(),
                                                 );
-                                              }).toList(),
-                                            );
-                                          },
+                                              },
+                                            ),
+                                          ],
                                         )
                                       : const Text(
                                           "No allergens detected",
