@@ -1,8 +1,10 @@
-import 'dart:io';
+import 'package:bme_scanner/pages/Components/camera_ocr_button.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:google_mlkit_text_recognition/google_mlkit_text_recognition.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:provider/provider.dart';
+import 'Components/OCRResultTile.dart';
+import 'Components/ScanHistoryState.dart';
+import 'Components/AllergyState.dart';
 
 class CameraOCRPage extends StatefulWidget {
   const CameraOCRPage({super.key});
@@ -12,89 +14,107 @@ class CameraOCRPage extends StatefulWidget {
 }
 
 class _CameraOCRPageState extends State<CameraOCRPage> {
-  File? _imageFile;
-  String _recognizedText = "";
-  bool _isProcessing = false;
-
-  final ImagePicker _picker = ImagePicker();
-  final TextRecognizer textRecognizer = TextRecognizer(
-    script: TextRecognitionScript.latin,
-  );
-
-  Future<void> _performScan() async {
-    PermissionStatus status = await Permission.camera.request();
-    if (!status.isGranted) return;
-
-    final XFile? picked = await _picker.pickImage(source: ImageSource.camera);
-
-    if (picked == null) return;
-
-    setState(() {
-      _imageFile = File(picked.path);
-      _recognizedText = "";
-      _isProcessing = true;
-    });
-
-    final inputImage = InputImage.fromFile(_imageFile!);
-
-    try {
-      final RecognizedText text = await textRecognizer.processImage(inputImage);
-
-      setState(() {
-        _recognizedText = text.text;
-      });
-    } catch (e) {
-      setState(() {
-        _recognizedText = "Error: $e";
-      });
-    }
-
-    setState(() {
-      _isProcessing = false;
-    });
-  }
-
-  @override
-  void dispose() {
-    textRecognizer.close();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
+    final scanHistory = context.watch<ScanHistoryState>();
+
     return Scaffold(
       appBar: AppBar(title: const Text("Camera OCR")),
-
-      floatingActionButton: FloatingActionButton(
-        onPressed: _performScan,
-        child: const Icon(Icons.camera_alt),
-      ),
 
       body: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(
           children: [
-            if (_imageFile != null) Image.file(_imageFile!, height: 250),
+            /// Camera OCR button
+            CameraOCRButton(
+              onTextRecognized: (text, image) {
+                // Compute allergens
+                final selectedAllergies = context
+                    .read<AllergyState>()
+                    .selectedAllergies;
+                final lowerText = text.toLowerCase();
 
-            const SizedBox(height: 16),
+                List<Map<String, String>> selectedAllergySynonyms = context
+                    .read<AllergyState>()
+                    .allergies
+                    .where((a) => selectedAllergies.contains(a['stof']))
+                    .expand((a) {
+                      final String parent = (a['stof'] ?? '').toString();
+                      final List<dynamic> rawSyns =
+                          (a['synoniemen'] as List<dynamic>?) ?? [];
+                      // include the parent name itself plus all synonyms
+                      final Iterable<String> allCandidates = [
+                        parent,
+                        ...rawSyns.map((s) => s.toString()),
+                      ];
+                      return allCandidates.map(
+                        (syn) => {'allergy': parent, 'synonym': syn},
+                      );
+                    })
+                    .toList();
 
-            if (_isProcessing) const CircularProgressIndicator(),
+                final matchedAllergens = selectedAllergySynonyms
+                    .where(
+                      (allergy) =>
+                          lowerText.contains(allergy['synonym']!.toLowerCase()),
+                    )
+                    .map(
+                      (allergy) =>
+                          '${allergy['synonym']} ( van: ${allergy['allergy']})',
+                    )
+                    .toSet()
+                    .toList();
 
-            const SizedBox(height: 16),
-            const Text(
-              "Recognized Text:",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                final allergensDetected = matchedAllergens.isNotEmpty;
+
+                // Add scan to history
+                context.read<ScanHistoryState>().addScan(
+                  title: "Scan ${scanHistory.history.length + 1}",
+                  recognizedText: text,
+                  imageFile: image,
+                  allergensDetected: allergensDetected,
+                  matchedAllergens: matchedAllergens,
+                  timestamp: DateTime.now(),
+                );
+              },
+              onPermissionDenied: () {
+                final messenger = ScaffoldMessenger.of(context);
+                messenger.hideCurrentSnackBar();
+                messenger.showSnackBar(
+                  SnackBar(
+                    content: const Text("Allow camera access."),
+                    action: SnackBarAction(
+                      label: "Settings",
+                      onPressed: openAppSettings,
+                    ),
+                  ),
+                );
+              },
             ),
 
-            const SizedBox(height: 8),
+            const SizedBox(height: 16),
 
+            /// Scan history list
             Expanded(
-              child: SingleChildScrollView(
-                child: Text(
-                  _recognizedText.isEmpty ? "No scan yet." : _recognizedText,
-                  style: const TextStyle(fontSize: 16),
-                ),
-              ),
+              child: scanHistory.history.isEmpty
+                  ? const Center(
+                      child: Text(
+                        "No scans yet.",
+                        style: TextStyle(fontSize: 16),
+                      ),
+                    )
+                  : ListView.builder(
+                      itemCount: scanHistory.history.length,
+                      itemBuilder: (context, index) {
+                        final scan = scanHistory.history[index];
+                        return OCRResultTile(
+                          scanId: scan.id,
+                          title: scan.title,
+                          recognizedText: scan.recognizedText,
+                          imageFile: scan.imageFile,
+                        );
+                      },
+                    ),
             ),
           ],
         ),

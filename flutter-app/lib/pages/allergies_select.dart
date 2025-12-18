@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Components/AllergyState.dart';
 import 'Components/allergy_listing.dart';
-// import 'allergy_item_widget.dart';
 
 class AllergiesSelectPage extends StatefulWidget {
   const AllergiesSelectPage({super.key});
@@ -15,9 +16,6 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
   final TextEditingController _searchController = TextEditingController();
   final FocusNode _searchFocusNode = FocusNode();
 
-  // Sample allergy list; replace with your real data source
-  final List<String> _allergies = ['Allergy 1', 'Allergy 2'];
-
   String _searchQuery = '';
 
   @override
@@ -29,10 +27,13 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
 
   @override
   Widget build(BuildContext context) {
+    final allergyState = context.watch<AllergyState>();
+
     // Filter allergies based on search query
-    final filteredAllergies = _allergies
-        .where((a) => a.toLowerCase().contains(_searchQuery.toLowerCase()))
-        .toList();
+    final filtered = allergyState.allergies.where((item) {
+      final name = item["stof"] ?? "";
+      return name.toLowerCase().contains(_searchQuery.toLowerCase());
+    }).toList();
 
     return GestureDetector(
       onTap: () {
@@ -47,7 +48,23 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
             IconButton(
               icon: const Icon(Icons.info_outline),
               onPressed: () {
-                print('Info button pressed');
+                showDialog(
+                  context: context,
+                  builder: (context) => AlertDialog(
+                    title: const Text('Allergy Information'),
+                    content: const Text(
+                      'Select your allergies from the list. \n\n'
+                      'You can search for specific allergies using the search bar. \n\n'
+                      'These selections will be used to identify potential allergens in scanned products.',
+                    ),
+                    actions: [
+                      TextButton(
+                        onPressed: () => Navigator.of(context).pop(),
+                        child: const Text('OK'),
+                      ),
+                    ],
+                  ),
+                );
               },
             ),
           ],
@@ -81,15 +98,17 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                 // ---------- Allergy List ----------
                 Expanded(
                   child: ListView.builder(
-                    itemCount: filteredAllergies.length,
+                    itemCount: filtered.length,
                     itemBuilder: (context, index) {
-                      final allergyName = filteredAllergies[index];
+                      final item = filtered[index];
+                      final name = item["stof"];
+
                       return AllergyListingWidget(
-                        allergyName: allergyName,
-                        alternativeNames: [
-                          "sample alternative 1",
-                          "sample alternative 2",
-                        ],
+                        item: item,
+                        isSelected: allergyState.isSelected(name),
+                        onChanged: (isSelected) {
+                          allergyState.setSelected(name, isSelected);
+                        },
                       );
                     },
                   ),

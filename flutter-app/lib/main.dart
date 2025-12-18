@@ -1,10 +1,21 @@
 import 'package:bme_scanner/pages/allergies_select.dart';
 import 'package:bme_scanner/pages/camera_ocr_page.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'pages/Components/AllergyState.dart';
+import 'pages/Components/ScanHistoryState.dart';
 import 'pages/home_page.dart';
 
 void main() {
-  runApp(const IngredientScannerApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => AllergyState()),
+        ChangeNotifierProvider(create: (_) => ScanHistoryState()),
+      ],
+      child: const IngredientScannerApp(),
+    ),
+  );
 }
 
 class IngredientScannerApp extends StatelessWidget {
@@ -39,7 +50,7 @@ class _MainNavigationState extends State<MainNavigation> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _screens[_selectedIndex],
+      body: IndexedStack(index: _selectedIndex, children: _screens),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _selectedIndex,
@@ -48,6 +59,9 @@ class _MainNavigationState extends State<MainNavigation> {
           setState(() {
             _selectedIndex = index;
           });
+          if (index == 0) {
+            Provider.of<AllergyState>(context, listen: false).tryServerUpdate();
+          }
         },
         items: const [
           BottomNavigationBarItem(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'Components/AllergyState.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -12,28 +14,6 @@ class HomePage extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            ElevatedButton.icon(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.camera_alt_rounded,
-                size: 28,
-                color: Colors.white,
-              ),
-              label: Text(
-                'Scan Product',
-                style: const TextStyle(fontSize: 20, color: Colors.white),
-              ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 60),
-                padding: const EdgeInsets.all(8),
-                backgroundColor: const Color(0xFF4B986C),
-                elevation: 2,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(16),
-                ),
-              ),
-            ),
-            SizedBox(height: 20),
             Text(
               "Welcome to the Ingredient Scanner!",
               style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
@@ -43,6 +23,13 @@ class HomePage extends StatelessWidget {
             Text(
               "Easily scan product ingredients to check for allergens.",
               style: TextStyle(fontSize: 16),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 10),
+            Text(
+              context.watch<AllergyState>().selectedAllergies.isEmpty
+                  ? "No allergies selected. \nClick selected allergies below to add."
+                  : "You have selected ${context.watch<AllergyState>().selectedAllergies.length} allergies. \nClick Scan below to start scanning.",
               textAlign: TextAlign.center,
             ),
           ],
