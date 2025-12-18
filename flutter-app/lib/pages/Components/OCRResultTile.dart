@@ -389,7 +389,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
     final subtitle = timeAgo(scan.timestamp);
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
+      padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 6),
       child: InkWell(
         borderRadius: BorderRadius.circular(12),
         onTap: () => _showBottomSheet(context),

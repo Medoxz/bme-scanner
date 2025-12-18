@@ -41,7 +41,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('Your Allergies'),
+          title: const Text('Jouw Allergieën'),
           centerTitle: false,
           elevation: 0,
           actions: [
@@ -51,11 +51,11 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                 showDialog(
                   context: context,
                   builder: (context) => AlertDialog(
-                    title: const Text('Allergy Information'),
+                    title: const Text('Allergie Informatie'),
                     content: const Text(
-                      'Select your allergies from the list. \n\n'
-                      'You can search for specific allergies using the search bar. \n\n'
-                      'These selections will be used to identify potential allergens in scanned products.',
+                      'Selecteer je allergieën uit de lijst. \n\n'
+                      'Je kunt zoeken naar specifieke allergieën met de zoekbalk. \n\n'
+                      'Deze selecties worden gebruikt om mogelijke allergenen in gescande producten te identificeren.',
                     ),
                     actions: [
                       TextButton(
@@ -79,7 +79,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                   controller: _searchController,
                   focusNode: _searchFocusNode,
                   decoration: InputDecoration(
-                    hintText: 'Search allergies...',
+                    hintText: 'Zoek allergieën...',
                     prefixIcon: const Icon(Icons.search_rounded),
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(12),

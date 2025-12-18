@@ -19,7 +19,7 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
     final scanHistory = context.watch<ScanHistoryState>();
 
     return Scaffold(
-      appBar: AppBar(title: const Text("Camera OCR")),
+      appBar: AppBar(title: const Text("Ingrediënten Scanner")),
 
       body: Padding(
         padding: const EdgeInsets.all(16),
@@ -82,9 +82,9 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
                 messenger.hideCurrentSnackBar();
                 messenger.showSnackBar(
                   SnackBar(
-                    content: const Text("Allow camera access."),
+                    content: const Text("Geef toegang tot de camera."),
                     action: SnackBarAction(
-                      label: "Settings",
+                      label: "Instellingen",
                       onPressed: openAppSettings,
                     ),
                   ),
@@ -94,28 +94,53 @@ class _CameraOCRPageState extends State<CameraOCRPage> {
 
             const SizedBox(height: 16),
 
-            /// Scan history list
             Expanded(
-              child: scanHistory.history.isEmpty
-                  ? const Center(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Theme.of(context).colorScheme.surfaceContainer,
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Align(
+                      alignment: Alignment.centerLeft,
                       child: Text(
-                        "No scans yet.",
-                        style: TextStyle(fontSize: 16),
+                        "Scan Geschiedenis",
+                        style: Theme.of(context).textTheme.headlineMedium,
                       ),
-                    )
-                  : ListView.builder(
-                      itemCount: scanHistory.history.length,
-                      itemBuilder: (context, index) {
-                        final scan = scanHistory.history[index];
-                        return OCRResultTile(
-                          scanId: scan.id,
-                          title: scan.title,
-                          recognizedText: scan.recognizedText,
-                          imageFile: scan.imageFile,
-                        );
-                      },
                     ),
-            ),
+                    
+                    
+                    const SizedBox(height: 8),
+
+                    /// Scan history list
+                    Expanded(
+                      child: scanHistory.history.isEmpty
+                          ? const Center(
+                              child: Text(
+                                "Nog geen scans.",
+                                style: TextStyle(fontSize: 16),
+                              ),
+                            )
+                          : ListView.builder(
+                              itemCount: scanHistory.history.length,
+                              itemBuilder: (context, index) {
+                                final scan = scanHistory.history[index];
+                                return OCRResultTile(
+                                  scanId: scan.id,
+                                  title: scan.title,
+                                  recognizedText: scan.recognizedText,
+                                  imageFile: scan.imageFile,
+                                );
+                              },
+                            ),
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),

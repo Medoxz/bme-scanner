@@ -66,7 +66,7 @@ class _MainNavigationState extends State<MainNavigation> {
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.list),
-            label: "Selected Allergies",
+            label: "Allergieën",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.house_outlined),
