@@ -83,7 +83,7 @@ class _CameraOCRButtonState extends State<CameraOCRButton> {
                   const Icon(Icons.camera_alt, size: 24, color: Colors.white),
                   SizedBox(width: 8),
                   const Text(
-                    "Scan Product",
+                    "Scan Ingrediënten",
                     style: TextStyle(color: Colors.white, fontSize: 24),
                   ),
                 ],

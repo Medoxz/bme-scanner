@@ -31,8 +31,18 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
 
     // Filter allergies based on search query
     final filtered = allergyState.allergies.where((item) {
+
       final name = item["stof"] ?? "";
-      return name.toLowerCase().contains(_searchQuery.toLowerCase());
+      final synonymList = item["synoniemen"] as List<dynamic>? ?? [];
+      if (name.toLowerCase().contains(_searchQuery.toLowerCase())) {
+        return true;
+      }
+      for (final syn in synonymList) {
+        if (syn.toString().toLowerCase().contains(_searchQuery.toLowerCase())) {
+          return true;
+        }
+      }
+      return false;
     }).toList();
 
     return GestureDetector(

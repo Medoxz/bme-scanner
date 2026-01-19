@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:bme_scanner/pages/Components/HighlightTextController.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'AllergyState.dart';
@@ -36,7 +37,8 @@ class _OCRResultTileState extends State<OCRResultTile> {
     final double width = MediaQuery.of(context).size.width * 0.95;
 
     // Controllers created here so we can save on explicit Save press and dispose afterwards
-    final TextEditingController textController = TextEditingController(
+    final HighlightTextController textController = HighlightTextController(
+      matchedAllergies: [],
       text: widget.recognizedText,
     );
     final TextEditingController titleController = TextEditingController(
@@ -73,19 +75,32 @@ class _OCRResultTileState extends State<OCRResultTile> {
                 })
                 .toList();
 
-            List<String> matchedAllergies = selectedAllergySynonyms
+            List<Map<String, String>> matchedAllergies = selectedAllergySynonyms
                 .where(
                   (allergy) =>
                       lowerText.contains(allergy['synonym']!.toLowerCase()),
                 )
                 .map(
-                  (allergy) =>
-                      '${allergy['synonym']} ( van: ${allergy['allergy']})',
+                  (allergy) => allergy,
                 )
                 .toSet()
                 .toList();
 
-            bool hasMatches = matchedAllergies.isNotEmpty;
+            List<Map<String, String>> distinctMatchedAllergies = matchedAllergies
+                .fold<List<Map<String, String>>>([], (acc, allergy) {
+              if (!acc.any((a) => a['synonym'] == allergy['synonym'])) {
+                acc.add(allergy);
+              }
+              return acc;
+            });
+
+            textController.matchedAllergies = distinctMatchedAllergies;
+
+            List<String> matchedAllergiesText = distinctMatchedAllergies
+                .map((e) => '${e['synonym']} \n( van: ${e['allergy']})')
+                .toList();
+
+            bool hasMatches = matchedAllergiesText.isNotEmpty;
 
             return Align(
               alignment: Alignment.bottomCenter,
@@ -163,7 +178,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                           title: titleController.text,
                                           recognizedText: textController.text,
                                           allergensDetected: hasMatches,
-                                          matchedAllergens: matchedAllergies,
+                                          matchedAllergens: matchedAllergiesText,
                                         );
                                         Navigator.of(context).pop();
                                       },
@@ -253,7 +268,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                       ? Column(
                                           children: [
                                             Text(
-                                              "Detected Allergens",
+                                              "Gedetecteerde allergenen:",
                                               style: TextStyle(
                                                 fontSize: 16,
                                                 fontWeight: FontWeight.bold,
@@ -268,7 +283,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                                 return Wrap(
                                                   spacing: 8,
                                                   runSpacing: 8,
-                                                  children: matchedAllergies.map((
+                                                  children: matchedAllergiesText.map((
                                                     allergy,
                                                   ) {
                                                     return ConstrainedBox(
@@ -418,7 +433,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                     child: Image.file(
                       widget.imageFile,
                       fit: BoxFit.cover,
-                      errorBuilder: (_, __, ___) => Container(
+                      errorBuilder: (_, _, _) => Container(
                         color: Colors.grey.shade200,
                         child: const Icon(Icons.image_not_supported, size: 28),
                       ),
@@ -492,10 +507,10 @@ class _OCRResultTileState extends State<OCRResultTile> {
 
     if (diff.inSeconds < 60) return 'Nu net';
     if (diff.inMinutes < 60) return '${diff.inMinutes}m geleden';
-    if (diff.inHours < 24) return '${diff.inHours}h geleden';
+    if (diff.inHours < 24) return '${diff.inHours}u geleden';
     if (diff.inDays < 7) return '${diff.inDays}d geleden';
     if (diff.inDays < 30) return '${(diff.inDays / 7).floor()}w geleden';
-    if (diff.inDays < 365) return '${(diff.inDays / 30).floor()}mo geleden';
-    return '${(diff.inDays / 365).floor()}y geleden';
+    if (diff.inDays < 365) return '${(diff.inDays / 30).floor()}ma geleden';
+    return '${(diff.inDays / 365).floor()}j geleden';
   }
 }
