@@ -314,7 +314,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                           ],
                                         )
                                       : const Text(
-                                          "No allergens detected",
+                                          "Geen allergenen gedetecteerd",
                                           style: TextStyle(fontSize: 16),
                                         ),
                                 ),
@@ -324,7 +324,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                             const SizedBox(height: 24),
 
                             const Text(
-                              "Recognized Text",
+                              "Herkende tekst",
                               style: TextStyle(
                                 fontSize: 18,
                                 fontWeight: FontWeight.bold,
@@ -340,7 +340,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                                   null, // allow multiline and let sheet scroll
                               decoration: const InputDecoration(
                                 border: OutlineInputBorder(),
-                                hintText: "Edit recognized text here...",
+                                hintText: "Bewerk herkende tekst hier...",
                               ),
                               onChanged: (_) {
                                 setState(
@@ -468,7 +468,7 @@ class _OCRResultTileState extends State<OCRResultTile> {
                       constraints: const BoxConstraints(),
                       icon: const Icon(Icons.edit, size: 16),
                       onPressed: () => _showBottomSheet(context),
-                      tooltip: 'Edit scan',
+                      tooltip: 'Bewerk scan',
                     ),
                     const SizedBox(height: 6),
                     Icon(
@@ -491,11 +491,11 @@ class _OCRResultTileState extends State<OCRResultTile> {
     final diff = DateTime.now().difference(dt);
 
     if (diff.inSeconds < 60) return 'Nu net';
-    if (diff.inMinutes < 60) return '${diff.inMinutes}m ago';
-    if (diff.inHours < 24) return '${diff.inHours}h ago';
-    if (diff.inDays < 7) return '${diff.inDays}d ago';
-    if (diff.inDays < 30) return '${(diff.inDays / 7).floor()}w ago';
-    if (diff.inDays < 365) return '${(diff.inDays / 30).floor()}mo ago';
-    return '${(diff.inDays / 365).floor()}y ago';
+    if (diff.inMinutes < 60) return '${diff.inMinutes}m geleden';
+    if (diff.inHours < 24) return '${diff.inHours}h geleden';
+    if (diff.inDays < 7) return '${diff.inDays}d geleden';
+    if (diff.inDays < 30) return '${(diff.inDays / 7).floor()}w geleden';
+    if (diff.inDays < 365) return '${(diff.inDays / 30).floor()}mo geleden';
+    return '${(diff.inDays / 365).floor()}y geleden';
   }
 }

@@ -83,7 +83,7 @@ class ScanHistoryState extends ChangeNotifier {
     final prefs = await SharedPreferences.getInstance();
     final encoded = jsonEncode(_history.map((r) => r.toJson()).toList());
     await prefs.setString(_prefsKey, encoded);
-    print('Saved scan history to prefs.');
+    debugPrint('Saved scan history to prefs.');
   }
 
   /// Load from SharedPreferences
