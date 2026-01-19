@@ -101,7 +101,7 @@ class _AllergiesSelectPageState extends State<AllergiesSelectPage> {
                     itemCount: filtered.length,
                     itemBuilder: (context, index) {
                       final item = filtered[index];
-                      final name = item["stof"];
+                      final name = item["stof"] ?? "";
 
                       return AllergyListingWidget(
                         item: item,
