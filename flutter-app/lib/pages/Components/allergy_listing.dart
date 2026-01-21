@@ -6,12 +6,15 @@ class AllergyListingWidget extends StatelessWidget {
     required this.item,
     required this.isSelected,
     required this.onChanged,
+    this.selectable = true
   });
 
   // The full allergy data map from your JSON assets (keys like 'stof', 'synoniemen', etc.)
   final Map<String, dynamic> item;
   final bool isSelected;
   final ValueChanged<bool> onChanged;
+  
+  final bool selectable;
 
   void _showDetails(BuildContext context) {
     final String stof = (item['stof'] ?? '').toString();
@@ -280,15 +283,22 @@ class AllergyListingWidget extends StatelessWidget {
                 ),
 
                 const SizedBox(width: 12),
-
-                // Switch (selection)
-                Switch.adaptive(
-                  value: isSelected,
-                  onChanged: onChanged,
-                  activeTrackColor: const Color(0xFFED260E),
-                  inactiveTrackColor: theme.disabledColor,
-                  inactiveThumbColor: theme.canvasColor,
+                
+                // a switch or a information icon depending on context, based on the bool selectable
+                selectable ? 
+                  // Switch (selection)
+                  Switch.adaptive(
+                    value: isSelected,
+                    onChanged: onChanged,
+                    activeTrackColor: const Color(0xFFED260E),
+                    inactiveTrackColor: theme.disabledColor,
+                    inactiveThumbColor: theme.canvasColor,
+                  ) : const Icon(
+                  Icons.info_outline,
+                  color: Colors.grey,
                 ),
+
+                
               ],
             ),
           ),

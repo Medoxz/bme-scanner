@@ -364,8 +364,60 @@ class _OCRResultTileState extends State<OCRResultTile> {
                               },
                             ),
 
-                            // Add some spacing at the bottom so content isn't flush with keyboard
-                            SizedBox(height: 16),
+                            // Delete scan button
+                            SizedBox(height: 24),
+                            // bottom right aligned
+                            Align(
+                              alignment: Alignment.centerRight,
+                              child: TextButton(
+                                style: TextButton.styleFrom(
+                                  foregroundColor: Colors.red,
+                                ),
+                                onPressed: () {
+                                  // open popup to confirm deletion
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: const Text('Verwijder scan'),
+                                      content: const Text(
+                                        'Weet je zeker dat je deze scan wilt verwijderen?',
+                                      ),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.of(context).pop(),
+                                          child: const Text('Annuleren'),
+                                        ),
+                                        TextButton(
+                                          onPressed: () {
+                                            Provider.of<ScanHistoryState>(
+                                              context,
+                                              listen: false,
+                                            ).removeScan(widget.scanId);
+                                            Navigator.of(context)
+                                                .pop(); // close dialog
+                                            Navigator.of(context)
+                                                .pop(); // close bottom sheet
+                                          },
+                                          child: const Text(
+                                            'Verwijder',
+                                            style: TextStyle(
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                },
+                                child: const Text(
+                                  'Verwijder scan',
+                                  style: TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                  ),
+                                ),
+                              ),
+                            ),
                           ],
                         ),
                       ),
