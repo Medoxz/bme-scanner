@@ -1,10 +1,17 @@
 import 'package:bme_scanner/pages/allergies_select.dart';
 import 'package:bme_scanner/pages/camera_ocr_page.dart';
+import 'package:bme_scanner/pages/onboarding_page.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'pages/Components/AllergyState.dart';
 import 'pages/Components/ScanHistoryState.dart';
 import 'pages/home_page.dart';
+
+Future<bool> _hasCompletedOnboarding() async {
+  final prefs = await SharedPreferences.getInstance();
+  return prefs.getBool('onboarding_completed') ?? false;
+}
 
 void main() {
   runApp(
@@ -26,7 +33,31 @@ class IngredientScannerApp extends StatelessWidget {
     return MaterialApp(
       title: "Ingredient Scanner",
       theme: ThemeData(primarySwatch: Colors.green),
-      home: const MainNavigation(),
+      home: const _HomeDecider(),
+    );
+  }
+}
+
+class _HomeDecider extends StatelessWidget {
+  const _HomeDecider();
+
+  @override
+  Widget build(BuildContext context) {
+    return FutureBuilder<bool>(
+      future: _hasCompletedOnboarding(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return const Scaffold(
+            body: Center(child: CircularProgressIndicator()),
+          );
+        }
+
+        if (snapshot.data ?? false) {
+          return const MainNavigation();
+        } else {
+          return const OnboardingPage();
+        }
+      },
     );
   }
 }
